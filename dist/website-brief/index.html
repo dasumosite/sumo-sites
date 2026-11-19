@@ -1,0 +1,543 @@
+<!doctype html>
+<html lang="en-SG">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Plan your website | SumoSites</title>
+    <meta
+      name="description"
+      content="Tell SumoSites about your business, content and website requirements. Review your answers and send them by email."
+    />
+    <link rel="icon" href="/assets/sumosites-icon.png" />
+    <link rel="stylesheet" href="/home.css" />
+    <link rel="stylesheet" href="/website-brief.css" />
+  </head>
+  <body>
+    <a class="skip button outline" href="#main">Skip to content</a>
+  <header class="site-header">
+    <div class="wrap header">
+      <a class="brand" href="/" aria-label="SumoSites home"><img src="/assets/sumosites-logo.webp" alt="SumoSites" width="640" height="150"></a>
+      <button class="button outline menu-toggle" type="button" aria-controls="site-navigation" aria-expanded="false" hidden>Menu</button>
+      <nav id="site-navigation" aria-label="Main navigation">
+        <a href="/#packages">Packages</a>
+        <details class="demos-menu">
+          <summary>Demos</summary>
+          <ul>
+            <li><a class="demos-overview" href="/demos/">All demos</a></li>
+            <li><a href="/demos/apex/">Apex Detail Studio</a></li>
+            <li><a href="/demos/property/">Elise Koh Property</a></li>
+            <li><a href="/demos/lumen/">Lumen Tuition</a></li>
+            <li><a href="/demos/coolpoint/">CoolPoint Aircon</a></li>
+            <li><a href="/demos/stockroom/">Kopi Stockroom</a></li>
+            <li><a href="/demos/butter-crumb/">Butter &amp; Crumb</a></li>
+          </ul>
+        </details>
+        <a href="/#care">Site care</a>
+        <a href="/#faq">FAQ</a>
+        <a href="/#enquire">Contact</a>
+      </nav>
+      <a class="button primary header-brief" href="#website-brief">Plan your website</a>
+    </div>
+  </header>
+    <main id="main" class="wrap brief-main">
+      <div class="brief-intro">
+        <h1>Tell me what you need</h1>
+        <p>
+          Answer a few questions about your business and the website you want.
+          I’ll use your answers to recommend what to build and give you a quote.
+        </p>
+        <p class="fine">
+          Only four answers are required. You’ll review your answers, then
+          open a draft in your email app addressed to SumoSites. Leaving or
+          refreshing this page clears your answers.
+        </p>
+        <p class="brief-direct">
+          Questions or prefer to talk first?
+          <a href="https://wa.me/6587890507">Message me on WhatsApp</a> or
+          <a href="mailto:dasumo.site@gmail.com">email me</a>.
+        </p>
+      </div>
+      <noscript
+        ><div class="brief-note">
+          <p>
+            This form needs JavaScript to prepare your email. You can also send
+            your business details, website goals, content, design ideas and
+            timing directly to
+            <a href="mailto:dasumo.site@gmail.com">dasumo.site@gmail.com</a>.
+          </p>
+        </div></noscript
+      >
+      <form id="website-brief" novalidate hidden>
+        <div class="brief-progress">
+          <p id="step-label" role="status"></p>
+          <progress
+            id="brief-progress"
+            max="6"
+            value="1"
+            aria-label="Form progress"
+          ></progress>
+        </div>
+        <p id="form-error" role="alert"></p>
+        <section class="brief-step" data-title="Your business">
+          <h2 tabindex="-1">Your business</h2>
+          <p>A few basics to understand who the website is for.</p>
+          <div class="brief-field" data-question="Business name">
+            <label for="brief-business">Business name</label
+            ><span class="field-help" id="brief-business-hint"
+              >Your trading name, or a working name.</span
+            ><input
+              id="brief-business"
+              name="business"
+              type="text"
+              maxlength="250"
+              required
+              aria-describedby="brief-business-hint"
+            />
+          </div>
+          <div class="brief-field" data-question="What does your business do?">
+            <label for="brief-description">What does your business do?</label
+            ><span class="field-help" id="brief-description-hint"
+              >Describe your products or services in a few sentences.</span
+            ><textarea
+              id="brief-description"
+              name="description"
+              rows="4"
+              maxlength="4000"
+              required
+              aria-describedby="brief-description-hint"
+            ></textarea>
+          </div>
+          <div class="brief-field" data-question="Who are your customers?">
+            <label for="brief-audience"
+              >Who are your customers?
+              <span class="optional">(optional)</span></label
+            ><span class="field-help" id="brief-audience-hint"
+              >For example, families in Tampines or small business owners.</span
+            ><textarea
+              id="brief-audience"
+              name="audience"
+              rows="4"
+              maxlength="4000"
+              aria-describedby="brief-audience-hint"
+            ></textarea>
+          </div>
+          <div class="brief-field" data-question="Where do you operate?">
+            <label for="brief-area"
+              >Where do you operate?
+              <span class="optional">(optional)</span></label
+            ><span class="field-help" id="brief-area-hint"
+              >Locations served, or online only.</span
+            ><input
+              id="brief-area"
+              name="area"
+              type="text"
+              maxlength="250"
+              aria-describedby="brief-area-hint"
+            />
+          </div>
+        </section>
+        <section class="brief-step" data-title="Contact details" hidden>
+          <h2 tabindex="-1">Contact details</h2>
+          <p>
+            Your reply details are for this enquiry. Tell me separately what
+            should appear on the website.
+          </p>
+          <div class="brief-field" data-question="Your name">
+            <label for="brief-name">Your name</label
+            ><input
+              id="brief-name"
+              name="name"
+              type="text"
+              maxlength="250"
+              required
+            />
+          </div>
+          <div class="brief-field" data-question="Your email">
+            <label for="brief-email">Your email</label
+            ><span class="field-help" id="brief-email-hint"
+              >The address I should reply to.</span
+            ><input
+              id="brief-email"
+              name="email"
+              type="email"
+              maxlength="250"
+              required
+              aria-describedby="brief-email-hint"
+            />
+          </div>
+          <div class="brief-field" data-question="Your phone number">
+            <label for="brief-phone"
+              >Your phone number <span class="optional">(optional)</span></label
+            ><input id="brief-phone" name="phone" type="tel" maxlength="250" />
+          </div>
+          <div
+            class="brief-field"
+            data-question="Contact details for the website"
+          >
+            <label for="brief-publicContact"
+              >Contact details for the website
+              <span class="optional">(optional)</span></label
+            ><span class="field-help" id="brief-publicContact-hint"
+              >Public email, phone, preferred messaging platform, address,
+              opening hours and social links. Only include what you want
+              published.</span
+            ><textarea
+              id="brief-publicContact"
+              name="publicContact"
+              rows="4"
+              maxlength="4000"
+              aria-describedby="brief-publicContact-hint"
+            ></textarea>
+          </div>
+        </section>
+        <section class="brief-step" data-title="What you need" hidden>
+          <h2 tabindex="-1">What you need</h2>
+          <p>
+            No need to pick a package or a template. Describe the job and I’ll
+            recommend an approach.
+          </p>
+          <div class="brief-field" data-question="What should visitors do?">
+            <label for="brief-goal"
+              >What should visitors do?
+              <span class="optional">(optional)</span></label
+            ><span class="field-help" id="brief-goal-hint"
+              >For example, enquire, book a session, browse listings or place an
+              order.</span
+            ><textarea
+              id="brief-goal"
+              name="goal"
+              rows="4"
+              maxlength="4000"
+              aria-describedby="brief-goal-hint"
+            ></textarea>
+          </div>
+          <div class="brief-field" data-question="Pages or sections you need">
+            <label for="brief-pages"
+              >Pages or sections you need
+              <span class="optional">(optional)</span></label
+            ><span class="field-help" id="brief-pages-hint"
+              >For example, services, prices, about, gallery, FAQs and contact.
+              Or write “please recommend”.</span
+            ><textarea
+              id="brief-pages"
+              name="pages"
+              rows="4"
+              maxlength="4000"
+              aria-describedby="brief-pages-hint"
+            ></textarea>
+          </div>
+          <fieldset class="choices" data-question="Features you have in mind">
+            <legend>
+              Features you have in mind <span class="optional">(optional)</span>
+            </legend>
+            <div class="checks">
+              <label class="check"
+                ><input
+                  type="checkbox"
+                  name="features"
+                  value="Contact and messaging links"
+                /><span>Contact and messaging links</span></label
+              ><label class="check"
+                ><input
+                  type="checkbox"
+                  name="features"
+                  value="Booking or appointment links"
+                /><span>Booking or appointment links</span></label
+              ><label class="check"
+                ><input
+                  type="checkbox"
+                  name="features"
+                  value="Enquiry form"
+                /><span>Enquiry form</span></label
+              ><label class="check"
+                ><input
+                  type="checkbox"
+                  name="features"
+                  value="Photo gallery or listings"
+                /><span>Photo gallery or listings</span></label
+              ><label class="check"
+                ><input
+                  type="checkbox"
+                  name="features"
+                  value="Timetable or menu"
+                /><span>Timetable or menu</span></label
+              ><label class="check"
+                ><input
+                  type="checkbox"
+                  name="features"
+                  value="Online orders or payments"
+                /><span>Online orders or payments</span></label
+              ><label class="check"
+                ><input
+                  type="checkbox"
+                  name="features"
+                  value="Spreadsheet updates or automation"
+                /><span>Spreadsheet updates or automation</span></label
+              ><label class="check"
+                ><input
+                  type="checkbox"
+                  name="features"
+                  value="Customer accounts or staff tools"
+                /><span>Customer accounts or staff tools</span></label
+              ><label class="check"
+                ><input
+                  type="checkbox"
+                  name="features"
+                  value="Please recommend"
+                /><span>Please recommend</span></label
+              >
+            </div>
+          </fieldset>
+          <div
+            class="brief-field"
+            data-question="How should those features work?"
+          >
+            <label for="brief-workflow"
+              >How should those features work?
+              <span class="optional">(optional)</span></label
+            ><span class="field-help" id="brief-workflow-hint"
+              >What happens today, what should happen on the website, and any
+              tools you already use? Features and integrations are quoted after
+              review.</span
+            ><textarea
+              id="brief-workflow"
+              name="workflow"
+              rows="4"
+              maxlength="4000"
+              aria-describedby="brief-workflow-hint"
+            ></textarea>
+          </div>
+        </section>
+        <section class="brief-step" data-title="Content and design" hidden>
+          <h2 tabindex="-1">Content and design</h2>
+          <p>
+            Send what you have. If anything is missing, tell me what you need
+            help with.
+          </p>
+          <div
+            class="brief-field"
+            data-question="Products, services and prices"
+          >
+            <label for="brief-content"
+              >Products, services and prices
+              <span class="optional">(optional)</span></label
+            ><span class="field-help" id="brief-content-hint"
+              >Add the main offerings, descriptions, prices and any important
+              terms.</span
+            ><textarea
+              id="brief-content"
+              name="content"
+              rows="4"
+              maxlength="4000"
+              aria-describedby="brief-content-hint"
+            ></textarea>
+          </div>
+          <div
+            class="brief-field"
+            data-question="Your story and key selling points"
+          >
+            <label for="brief-about"
+              >Your story and key selling points
+              <span class="optional">(optional)</span></label
+            ><span class="field-help" id="brief-about-hint"
+              >Why should someone choose you? Include testimonials only if you
+              have permission to publish them.</span
+            ><textarea
+              id="brief-about"
+              name="about"
+              rows="4"
+              maxlength="4000"
+              aria-describedby="brief-about-hint"
+            ></textarea>
+          </div>
+          <div
+            class="brief-field"
+            data-question="Logo, photos and written content"
+          >
+            <label for="brief-assets"
+              >Logo, photos and written content
+              <span class="optional">(optional)</span></label
+            ><select id="brief-assets" name="assets">
+              <option>Not sure yet</option>
+              <option>Ready to share</option>
+              <option>Some content ready</option>
+              <option>I need help with these</option>
+            </select>
+          </div>
+          <div class="brief-field" data-question="Shared folder or file links">
+            <label for="brief-folder"
+              >Shared folder or file links
+              <span class="optional">(optional)</span></label
+            ><span class="field-help" id="brief-folder-hint"
+              >Paste links you’re happy to share, or attach files yourself after
+              opening the email draft. This form does not upload files.</span
+            ><textarea
+              id="brief-folder"
+              name="folder"
+              rows="4"
+              maxlength="4000"
+              aria-describedby="brief-folder-hint"
+            ></textarea>
+          </div>
+          <div
+            class="brief-field"
+            data-question="Colours, style and references"
+          >
+            <label for="brief-style"
+              >Colours, style and references
+              <span class="optional">(optional)</span></label
+            ><span class="field-help" id="brief-style-hint"
+              >Brand colours, websites you like, what you like about them, and
+              anything to avoid. No template choice needed.</span
+            ><textarea
+              id="brief-style"
+              name="style"
+              rows="4"
+              maxlength="4000"
+              aria-describedby="brief-style-hint"
+            ></textarea>
+          </div>
+        </section>
+        <section class="brief-step" data-title="Timing and setup" hidden>
+          <h2 tabindex="-1">Timing and setup</h2>
+          <p>
+            Rough answers are fine. I’ll use them to prepare a quote.
+          </p>
+          <div class="brief-field" data-question="Current website and domain">
+            <label for="brief-existing"
+              >Current website and domain
+              <span class="optional">(optional)</span></label
+            ><span class="field-help" id="brief-existing-hint"
+              >Any existing website URL, domain name or hosting? Say what you
+              already own, or ask for help. Do not include passwords or access
+              codes.</span
+            ><textarea
+              id="brief-existing"
+              name="existing"
+              rows="4"
+              maxlength="4000"
+              aria-describedby="brief-existing-hint"
+            ></textarea>
+          </div>
+          <div class="brief-field" data-question="Budget range (SGD)">
+            <label for="brief-budget"
+              >Budget range (SGD)
+              <span class="optional">(optional)</span></label
+            ><span class="field-help" id="brief-budget-hint"
+              >Optional. “Please recommend” is fine.</span
+            ><input
+              id="brief-budget"
+              name="budget"
+              type="text"
+              maxlength="250"
+              aria-describedby="brief-budget-hint"
+            />
+          </div>
+          <div class="brief-field" data-question="Preferred launch timing">
+            <label for="brief-deadline"
+              >Preferred launch timing
+              <span class="optional">(optional)</span></label
+            ><span class="field-help" id="brief-deadline-hint"
+              >A date or rough timeframe, and whether it’s flexible.</span
+            ><input
+              id="brief-deadline"
+              name="deadline"
+              type="text"
+              maxlength="250"
+              aria-describedby="brief-deadline-hint"
+            />
+          </div>
+          <div class="brief-field" data-question="Help after launch">
+            <label for="brief-support"
+              >Help after launch <span class="optional">(optional)</span></label
+            ><select id="brief-support" name="support">
+              <option>Please recommend</option>
+              <option>
+                Website care — S$89/year, includes five edit requests
+              </option>
+              <option>One-off edits — S$5–20 depending on scope</option>
+              <option>Deployment management only — S$49/year</option>
+              <option>I’ll manage it myself</option>
+            </select>
+          </div>
+          <div class="brief-field" data-question="Anything else to know?">
+            <label for="brief-other"
+              >Anything else to know?
+              <span class="optional">(optional)</span></label
+            ><span class="field-help" id="brief-other-hint"
+              >Special requirements, accessibility needs, multiple languages or
+              questions for me.</span
+            ><textarea
+              id="brief-other"
+              name="other"
+              rows="4"
+              maxlength="4000"
+              aria-describedby="brief-other-hint"
+            ></textarea>
+          </div>
+        </section>
+        <section class="brief-step" data-title="Review and email" hidden>
+          <h2 tabindex="-1">Review and email</h2>
+          <p>To: <strong>dasumo.site@gmail.com</strong></p>
+          <p>
+            Check your answers below. Review the draft in your email app and
+            press Send when it’s ready. Attach your photos or logo if needed.
+          </p>
+          <label for="email-preview">Your answers</label
+          ><textarea id="email-preview" rows="16" readonly></textarea>
+          <p id="long-draft" class="brief-note" hidden>
+            Your answers are long. Some email apps may cut off a long draft. To
+            keep every answer, download your answers and attach it to your email,
+            or copy it into the message.
+          </p>
+          <div class="actions brief-tools">
+            <button type="button" class="button outline" id="copy-brief">
+              Copy answers</button
+            ><button type="button" class="button outline" id="download-brief">
+              Download answers</button
+            ><a
+              id="gmail-draft"
+              class="button outline"
+              href="https://mail.google.com/"
+              target="_blank"
+              rel="noopener noreferrer"
+              >Open in Gmail</a
+            >
+          </div>
+          <p id="brief-status" role="status"></p>
+        </section>
+        <div class="brief-controls">
+          <button id="brief-back" type="button" class="button outline" hidden>
+            Back</button
+          ><button id="brief-next" type="button" class="button primary">Continue</button
+          ><button id="brief-send" type="submit" class="button primary" hidden>
+            Open email draft
+          </button>
+        </div>
+        <p class="fine">
+          Nothing is sent automatically. Please don’t include passwords, payment
+          details or private customer information.
+        </p>
+      </form>
+    </main>
+  <footer class="site-footer">
+    <div class="wrap footer-content">
+      <div class="footer-brand">
+        <a class="brand" href="/" aria-label="SumoSites home"><img src="/assets/sumosites-logo.webp" alt="SumoSites" width="640" height="150" loading="lazy"></a>
+        <p>Websites for businesses in Singapore.</p>
+      </div>
+      <div class="footer-contact">
+        <h2>Get in touch</h2>
+        <p><a href="https://wa.me/6587890507" target="_blank" rel="noopener noreferrer">WhatsApp +65 8789 0507</a></p>
+        <p><a href="mailto:dasumo.site@gmail.com">dasumo.site@gmail.com</a></p>
+      </div>
+    </div>
+    <div class="wrap footer-end">
+      <small>© 2026 SumoSites</small>
+      <small>Instagram [@HANDLE]</small>
+    </div>
+  </footer>
+    <script src="/website-brief.js" defer></script>
+    <script src="/navigation.js" defer></script>
+</body>
+</html>

@@ -1,0 +1,82 @@
+<!doctype html>
+<html lang="en-SG">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex">
+  <title>Kopi Stockroom | SumoSites demo</title>
+  <link rel="icon" href="/assets/sumosites-icon.png" type="image/png">
+  <link rel="stylesheet" href="/assets/demos/fonts.css">
+  <link rel="stylesheet" href="/assets/demos/demos.css">
+  <script type="module" src="/assets/demos/contact.js"></script>
+  <script type="module" src="/assets/demos/stockroom.js"></script>
+</head>
+<body class="stockroom">
+  <a class="skip" href="#content">Skip to content</a>
+  <aside class="sumo-bar" aria-label="About this demo"><div class="sumo-wrap">
+    <a href="/demos">Back to demos</a>
+    <span>Example site for a fictional business</span>
+    <strong id="demo-package">Sample of: Custom business system, quoted per project</strong>
+  </div></aside>
+  
+  
+<main id="content">
+  <div class="shell stock-layout">
+    <header class="stock-top">
+      <a class="business-name" href="/demos/stockroom">Kopi Stockroom</a>
+      <fieldset id="stock-role" class="segmented"><legend>View as</legend><label><input name="role" value="owner" type="radio" checked> Owner</label><label><input name="role" value="staff" type="radio"> Staff</label></fieldset>
+    </header>
+    <nav class="stock-nav" aria-label="Stockroom screens"><button type="button" data-screen="stock" aria-current="page">Stock</button><button type="button" data-screen="log">Stock log</button><button type="button" data-screen="staff">Staff</button></nav>
+    <div class="stock-workspace">
+      <p class="note stock-note">Sample data. Nothing is saved.</p>
+      <section id="stock-screen" aria-labelledby="stock-title">
+        <div class="section-head"><h1 id="stock-title">Stock</h1><p id="stock-count"></p></div>
+        <div class="filters"><label>Search stock<input type="search" id="stock-search" placeholder="Search items"></label><label>Category<select id="stock-category"><option value="">All categories</option></select></label></div>
+        <div class="table-scroll" tabindex="0" role="region" aria-label="Stock inventory table"><table>
+          <thead><tr><th scope="col">Item</th><th scope="col">Category</th><th scope="col">Qty</th><th scope="col">Unit</th><th scope="col">Reorder at</th><th scope="col" id="unit-cost">Unit cost</th><th scope="col">Status</th><th scope="col">Actions</th></tr></thead>
+          <tbody id="stock-rows"></tbody>
+        </table></div>
+      </section>
+      <section id="log-screen" aria-labelledby="log-title" hidden>
+        <h1 id="log-title">Stock log</h1>
+        <div class="table-scroll after-title" tabindex="0" role="region" aria-label="Stock log table"><table><thead><tr><th scope="col">Date</th><th scope="col">Item</th><th scope="col">Change</th><th scope="col">Who</th><th scope="col">Note</th></tr></thead><tbody id="log-rows"></tbody></table></div>
+      </section>
+      <section id="staff-screen" aria-labelledby="staff-title" hidden>
+        <div class="section-head"><h1 id="staff-title">Staff</h1><button class="action" id="add-staff" type="button">Add staff</button></div>
+        <div class="table-scroll" tabindex="0" role="region" aria-label="Staff table"><table><thead><tr><th scope="col">Name</th><th scope="col">Role</th><th scope="col">Last active</th><th scope="col">Actions</th></tr></thead><tbody id="staff-rows"></tbody></table></div>
+      </section>
+      <p id="stock-status" role="status"></p>
+    </div>
+  </div>
+  <section class="shell section custom-help">
+    <h2>How a custom build works</h2>
+    <ol class="grid three after-title"><li>Tell me how your business works today</li><li>We agree what the system needs to do</li><li>You get a fixed quote for that scope</li></ol>
+    <a class="action" href="/#enquire">Discuss a custom build</a>
+  </section>
+  <dialog id="stock-change" aria-labelledby="stock-change-title">
+    <h2 id="stock-change-title"></h2><p id="stock-change-item"></p>
+    <form id="stock-change-form">
+      <label>Quantity<input name="quantity" type="number" min="1" step="1" max="10000" required></label>
+      <label>Note<input name="note" maxlength="100"></label>
+      <div class="actions"><button class="action" type="submit">Save change</button><button class="action secondary" type="button" data-close>Cancel</button></div>
+    </form>
+  </dialog>
+  <dialog id="staff-edit" aria-labelledby="staff-edit-title">
+    <h2 id="staff-edit-title"></h2>
+    <form id="staff-edit-form">
+      <div id="staff-add-fields"><label>Name<input name="name" maxlength="60"></label><label>Role<select name="role"><option>Staff</option><option>Owner</option></select></label></div>
+      <p id="staff-remove-copy" hidden></p>
+      <div class="actions"><button class="action" id="staff-save" type="submit">Add staff</button><button class="action secondary" type="button" data-close>Cancel</button></div>
+    </form>
+  </dialog>
+</main>
+  <footer class="business-footer"><div class="shell">Kopi Stockroom <span>Café inventory demo</span></div></footer>
+  <aside class="sumo-cta"><div class="sumo-wrap"><p>Want a site like this for your business?</p><a href="/#enquire">Get a quote</a></div></aside>
+  <dialog id="demo-contact" aria-labelledby="contact-popup-title">
+    <h2 id="contact-popup-title"></h2>
+    <p id="contact-popup-description"></p>
+    <blockquote id="contact-popup-message" hidden></blockquote>
+    <div class="actions"><a class="action" href="/#enquire">Get a site like this</a><form method="dialog"><button class="action secondary">Close</button></form></div>
+  </dialog>
+</body>
+</html>

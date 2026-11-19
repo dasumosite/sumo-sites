@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="en-SG">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex">
+  <title>CoolPoint Aircon | SumoSites demo</title>
+  <link rel="icon" href="/assets/sumosites-icon.png" type="image/png">
+  <link rel="stylesheet" href="/assets/demos/fonts.css">
+  <link rel="stylesheet" href="/assets/demos/demos.css">
+  <script type="module" src="/assets/demos/contact.js"></script>
+  <script type="module" src="/assets/demos/coolpoint.js"></script>
+</head>
+<body class="coolpoint">
+  <a class="skip" href="#content">Skip to content</a>
+  <aside class="sumo-bar" aria-label="About this demo"><div class="sumo-wrap">
+    <a href="/demos">Back to demos</a>
+    <span>Example site for a fictional business</span>
+    <strong id="demo-package">Built as: Website + automation, S$85</strong>
+  </div></aside>
+  
+  <header class="business-nav"><div class="shell"><a class="business-name" href="/demos/coolpoint">CoolPoint <span>Aircon</span></a><nav aria-label="Business navigation"><a href="#services">Services</a><a href="#quote-form">Get a quote</a><a href="#contact">Contact</a></nav></div></header>
+<main id="content">
+  <section class="band"><div class="shell split-hero">
+    <div><h1>Aircon not cold?</h1><p>Get a quote in 2 minutes.</p><a class="action" href="#quote-form">Get a quote</a></div>
+    <div class="service-panel">
+      <h2>Aircon servicing &amp; repairs</h2>
+      <ul><li>General servicing</li><li>Chemical wash and gas top-up</li><li>Repair and troubleshooting</li></ul>
+    </div>
+  </div></section>
+  <section class="shell section" id="services"><div class="section-head"><h2>Services and prices</h2><p>Illustrative prices</p></div>
+    <div class="grid four">
+      <article class="panel"><h3>General servicing</h3><p><strong>From S$25</strong> per unit</p></article>
+      <article class="panel"><h3>Chemical wash</h3><p><strong>From S$80</strong> per unit</p></article>
+      <article class="panel"><h3>Gas top-up</h3><p><strong>From S$60</strong></p></article>
+      <article class="panel"><h3>Repair and troubleshooting</h3><p><strong>From S$50</strong></p></article>
+    </div>
+  </section>
+  <section class="band section" id="quote-form"><div class="shell">
+    <div class="quote-layout"><div><h2 id="quote-heading">Request a quote</h2><p>Choose a service and tell us about your aircon.</p></div>
+    <form id="aircon-quote" class="panel" hidden>
+      <div class="fields">
+        <label>Service type<select name="service" required><option value="">Choose a service</option><option>General servicing</option><option>Chemical wash</option><option>Gas top-up</option><option>Repair and troubleshooting</option></select></label>
+        <label>Number of units<select name="units" required><option value="">Select units</option><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option><option>6+</option></select></label>
+        <label>Area<select name="area" required><option value="">Choose an area</option><option>North</option><option>South</option><option>East</option><option>West</option><option>Central</option></select></label>
+        <label>Preferred date<input name="date" type="date" required></label>
+        <label>Name<input name="name" maxlength="80" autocomplete="name" required></label>
+        <label>Mobile number<input name="mobile" type="tel" inputmode="tel" autocomplete="tel" pattern="(?:[+]65[ ]*)?[89][0-9 ]{6,10}[0-9]" title="Enter an 8-digit Singapore mobile number, with an optional +65 prefix" required></label>
+      </div>
+      <button class="action" type="submit">Show quote request</button>
+      <p class="note">This is a demo. Nothing you type is sent or saved.</p>
+    </form><noscript><p>Enable JavaScript to try the sample quote form.</p></noscript></div>
+    <div id="aircon-result" class="panel owner-view" hidden>
+      <h2 tabindex="-1">What the owner sees</h2>
+      <div class="mock-email"><h3>Notification email</h3><p><strong>Subject</strong> <span id="email-subject"></span></p><dl id="email-fields"></dl></div>
+      <div class="mock-sheet"><h3>Enquiry spreadsheet</h3><div class="table-scroll" tabindex="0" role="region" aria-label="Example enquiry spreadsheet"><table><thead><tr><th scope="col">Service</th><th scope="col">Units</th><th scope="col">Area</th><th scope="col">Preferred date</th><th scope="col">Name</th><th scope="col">Mobile</th></tr></thead><tbody>
+      <tr><td>General servicing</td><td>2</td><td>East</td><td>20 Nov 2026</td><td>Sample A</td><td>8XXX 0001</td></tr>
+      <tr><td>Chemical wash</td><td>1</td><td>Central</td><td>21 Nov 2026</td><td>Sample B</td><td>9XXX 0002</td></tr>
+      <tr id="new-enquiry"></tr></tbody></table></div></div>
+      <p>On a real site, this email and spreadsheet row are created automatically for every enquiry.</p>
+      <button class="action secondary" id="aircon-reset" type="button">Try again</button>
+    </div>
+  </div></section>
+  <section class="shell section contact-block" id="contact"><div><h2>Speak to CoolPoint</h2><p>Daily, 9am to 7pm. Islandwide servicing.</p></div><button type="button" class="action" data-simulate="WhatsApp" data-message="Hi CoolPoint, I need help with my aircon.">WhatsApp CoolPoint</button></section>
+</main>
+  <footer class="business-footer"><div class="shell">CoolPoint Aircon <span>Singapore</span></div></footer>
+  <aside class="sumo-cta"><div class="sumo-wrap"><p>Want a site like this for your business?</p><a href="/#enquire">Get a quote</a></div></aside>
+  <dialog id="demo-contact" aria-labelledby="contact-popup-title">
+    <h2 id="contact-popup-title"></h2>
+    <p id="contact-popup-description"></p>
+    <blockquote id="contact-popup-message" hidden></blockquote>
+    <div class="actions"><a class="action" href="/#enquire">Get a site like this</a><form method="dialog"><button class="action secondary">Close</button></form></div>
+  </dialog>
+</body>
+</html>

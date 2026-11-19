@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="en-SG">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex">
+  <title>Lumen Tuition | SumoSites demo</title>
+  <link rel="icon" href="/assets/sumosites-icon.png" type="image/png">
+  <link rel="stylesheet" href="/assets/demos/fonts.css">
+  <link rel="stylesheet" href="/assets/demos/demos.css">
+  <script type="module" src="/assets/demos/contact.js"></script>
+  <script type="module" src="/assets/demos/lumen.js"></script>
+</head>
+<body class="lumen">
+  <a class="skip" href="#content">Skip to content</a>
+  <aside class="sumo-bar" aria-label="About this demo"><div class="sumo-wrap">
+    <a href="/demos">Back to demos</a>
+    <span>Example site for a fictional business</span>
+    <strong id="demo-package">Built as: Basic website, S$42.50</strong>
+  </div></aside>
+  <div class="mode-bar"><div class="shell"><fieldset id="lumen-mode"><legend>View package</legend><label><input type="radio" name="mode" value="basic" checked> Basic, S$42.50</label><label><input type="radio" name="mode" value="automation"> With automation, S$85</label></fieldset></div></div>
+  <header class="business-nav"><div class="shell"><a class="business-name" href="/demos/lumen">Lumen <span>Tuition</span></a><nav aria-label="Business navigation"><a href="#subjects">Subjects</a><a href="#timetable">Timetable</a><a href="#contact">Contact</a></nav></div></header>
+<main id="content">
+  <section class="band"><div class="shell split-hero">
+    <div><h1>Small classes.<br>Steady progress.</h1><p>Maths and science tuition from Primary 4 to Secondary 4.</p><button type="button" class="action" data-simulate="WhatsApp" data-message="Hi Lumen, I&#x27;d like to ask about a trial class.">Ask about a trial class</button></div>
+    <div class="lumen-board"><strong>Maths &amp; Science</strong><p>Primary 4–6</p><p>Secondary 1–2</p><p>Secondary 3–4</p><a href="#timetable">See class times</a></div>
+  </div></section>
+  <section class="shell section" id="subjects">
+    <h2>Subjects and levels</h2>
+    <div class="grid three after-title">
+      <article class="panel"><h3>Primary 4–6</h3><p>Maths problem-solving and science concepts, with PSLE practice for Primary 6.</p></article>
+      <article class="panel"><h3>Secondary 1–2</h3><p>Algebra, geometry and lower-secondary science foundations.</p></article>
+      <article class="panel"><h3>Secondary 3–4</h3><p>E-Maths and science revision, including practice with exam-style questions.</p></article>
+    </div>
+  </section>
+  <section class="band section" id="timetable"><div class="shell">
+    <h2>Class timetable</h2>
+    <div id="timetable-basic" class="timetable-panel after-title">
+      <iframe id="lumen-embed" src="/demos/lumen/sample-sheet.html" title="Lumen class timetable spreadsheet" loading="lazy"></iframe>
+      <p class="note source-note" id="lumen-basic-note">This sample shows how the timetable looks as an embed. A connected Google Sheet updates when staff edit it.</p>
+    </div>
+    <div id="timetable-automation" class="timetable-panel" hidden>
+      <form class="filters" id="class-filters" aria-label="Filter classes">
+        <label>Level<select name="Level"><option value="">All levels</option></select></label>
+        <label>Subject<select name="Subject"><option value="">All subjects</option></select></label>
+        <label>Day<select name="Day"><option value="">All days</option></select></label>
+      </form>
+      <p class="note source-note" id="lumen-automation-note">The same sample timetable, shown in the site’s own layout with filters.</p>
+      <p class="result-count" id="class-count" role="status"></p><div id="class-cards" class="grid three"></div>
+      <template id="class-card"><article class="panel class-card"><p></p><h3></h3><p></p><p></p></article></template>
+    </div>
+    <a class="source-link" id="lumen-source" href="/assets/demos/timetable.csv">View the source spreadsheet</a>
+  </div></section>
+  <section class="shell section contact-block" id="contact"><div><h2>Visit Lumen</h2><p>18 Lantern Walk, #02-04, Singapore (sample address)</p><p>Tuesday to Friday, 3pm to 8pm. Saturday and Sunday, 9am to 5pm.</p></div><div class="actions"><button type="button" class="action" data-simulate="WhatsApp" data-message="Hi Lumen, I&#x27;d like to ask about a trial class.">Ask about a trial class</button><button type="button" class="action secondary" data-simulate="Google Maps" data-message="18 Lantern Walk, #02-04, Singapore">Open in Google Maps</button></div></section>
+</main>
+  <footer class="business-footer"><div class="shell">Lumen Tuition <span>Maths and science tuition</span></div></footer>
+  <aside class="sumo-cta"><div class="sumo-wrap"><p>Want a site like this for your business?</p><a href="/#enquire">Get a quote</a></div></aside>
+  <dialog id="demo-contact" aria-labelledby="contact-popup-title">
+    <h2 id="contact-popup-title"></h2>
+    <p id="contact-popup-description"></p>
+    <blockquote id="contact-popup-message" hidden></blockquote>
+    <div class="actions"><a class="action" href="/#enquire">Get a site like this</a><form method="dialog"><button class="action secondary">Close</button></form></div>
+  </dialog>
+</body>
+</html>

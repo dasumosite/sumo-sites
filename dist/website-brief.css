@@ -1,0 +1,168 @@
+[hidden] {
+  display: none !important;
+}
+.brief-main {
+  max-width: 880px;
+  padding-block: 35px 65px;
+}
+.brief-intro {
+  max-width: 760px;
+  margin-bottom: 32px;
+}
+.brief-intro h1 {
+  max-width: none;
+}
+#website-brief {
+  padding: 32px;
+  background: #fff;
+  border: 2px solid #1c2452;
+  border-radius: 16px;
+}
+.brief-progress {
+  padding-bottom: 24px;
+  border-bottom: 2px solid #e3e7f6;
+  margin-bottom: 28px;
+}
+.brief-progress p {
+  margin-bottom: 8px;
+  font-weight: 600;
+}
+progress {
+  display: block;
+  width: 100%;
+  height: 12px;
+  accent-color: #1c2452;
+  border: 0;
+  border-radius: 6px;
+  overflow: hidden;
+  background: #e3e7f6;
+}
+progress::-webkit-progress-bar {
+  background: #e3e7f6;
+}
+progress::-webkit-progress-value {
+  background: #1c2452;
+}
+progress::-moz-progress-bar {
+  background: #1c2452;
+}
+.brief-step h2 {
+  font-size: clamp(25px, 4vw, 34px);
+}
+.brief-field {
+  margin-bottom: 25px;
+}
+.brief-field label {
+  margin-bottom: 3px;
+}
+.optional {
+  font-weight: 400;
+  font-size: 17px;
+}
+.field-help {
+  display: block;
+  margin-bottom: 8px;
+  font-size: 17px;
+}
+.choices {
+  min-width: 0;
+  padding: 0;
+  margin: 0 0 25px;
+  border: 0;
+}
+.choices legend {
+  font-weight: 600;
+  margin-bottom: 12px;
+}
+.checks {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+.check {
+  display: flex;
+  gap: 12px;
+  align-items: start;
+  padding: 12px;
+  margin: 0;
+  border: 2px solid #e3e7f6;
+  border-radius: 7px;
+  font-weight: 400;
+}
+.check:has(input:checked) {
+  border-color: #1c2452;
+  background: #e3e7f6;
+}
+.check input {
+  width: 20px;
+  height: 20px;
+  flex: 0 0 20px;
+  margin: 3px 0 0;
+  padding: 0;
+  accent-color: #1c2452;
+}
+.brief-controls {
+  display: flex;
+  gap: 12px;
+  justify-content: space-between;
+  padding-block: 24px;
+}
+.brief-controls > :last-child {
+  margin-left: auto;
+}
+.brief-note {
+  padding: 18px;
+  background: #e3e7f6;
+  border: 2px solid #1c2452;
+  border-radius: 9px;
+  margin-block: 20px;
+}
+.brief-note p {
+  margin: 0;
+}
+.brief-tools {
+  margin-block: 22px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+#email-preview {
+  background: #f7f6f1;
+  font-size: 17px;
+}
+#form-error:empty,
+#brief-status:empty {
+  display: none;
+}
+#form-error {
+  background: #ffc531;
+  padding: 12px;
+  border: 2px solid;
+  border-radius: 7px;
+}
+.brief-direct {
+  margin-top: 12px;
+}
+@media (max-width: 580px) {
+  .brief-main {
+    padding-top: 25px;
+  }
+  #website-brief {
+    padding: 22px 18px;
+  }
+  .checks {
+    grid-template-columns: 1fr;
+  }
+  .brief-controls {
+    flex-wrap: wrap;
+  }
+}
+
+.brief-intro h1 { font-size: clamp(2.1rem, 6vw, 4rem); }
+.brief-intro .fine { margin-top: 8px; }
+.brief-step h2 { margin-bottom: 10px; }
+.brief-step h2 + p { margin-bottom: 18px; }
+.brief-tools .button { max-width: 100%; }
+#website-brief input[type="checkbox"] { min-height: 0; }
+#website-brief input::placeholder,
+#website-brief textarea::placeholder { color: #41486a; }
