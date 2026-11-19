@@ -2,11 +2,5 @@
   "name": "sumo-sites",
   "version": "1.0.0",
   "private": true,
-  "description": "SumoSites website and interactive demo sites",
-  "scripts": {
-    "deploy": "cf deploy ./dist"
-  },
-  "devDependencies": {
-    "cf": "1.0.0-rc.1"
-  }
+  "description": "SumoSites website and interactive demo sites"
 }
