@@ -4,6 +4,7 @@
   const back = document.querySelector("#brief-back");
   const next = document.querySelector("#brief-next");
   const send = document.querySelector("#brief-send");
+  const progress = document.querySelector("#brief-progress");
   const preview = document.querySelector("#email-preview");
   const status = document.querySelector("#brief-status");
   const error = document.querySelector("#form-error");
@@ -44,7 +45,7 @@
     next.textContent = index === steps.length - 2 ? "Review answers" : "Continue";
     document.querySelector("#step-label").textContent =
       `Step ${index + 1} of ${steps.length} · ${steps[index].dataset.title}`;
-    document.querySelector("#brief-progress").value = index + 1;
+    progress.value = index + 1;
     error.textContent = "";
     status.textContent = "";
     if (last) prepare();
@@ -126,5 +127,6 @@
     }
   });
   show(0, false);
-  form.hidden = false;
+  form.noValidate = true;
+  progress.closest(".brief-progress").hidden = false;
 })();

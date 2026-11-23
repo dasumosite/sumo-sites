@@ -11,7 +11,7 @@
     />
     <link rel="icon" href="/assets/sumosites-icon.png" />
     <link rel="stylesheet" href="/home.css" />
-    <link rel="stylesheet" href="/website-brief.css" />
+    <link rel="stylesheet" href="/website-brief.css?v=visible-form" />
   </head>
   <body>
     <a class="skip button outline" href="#main">Skip to content</a>
@@ -57,22 +57,12 @@
           <a href="mailto:dasumo.site@gmail.com">email me</a>.
         </p>
       </div>
-      <noscript
-        ><div class="brief-note">
-          <p>
-            This form needs JavaScript to submit. You can also send
-            your business details, website goals, content, design ideas and
-            timing directly to
-            <a href="mailto:dasumo.site@gmail.com">dasumo.site@gmail.com</a>.
-          </p>
-        </div></noscript
-      >
-      <form id="website-brief" action="/api/website-brief" method="post" novalidate hidden>
+      <form id="website-brief" action="/api/website-brief" method="post">
         <div hidden>
           <label for="brief-website-url">Website URL</label>
           <input id="brief-website-url" name="websiteUrl" type="text" tabindex="-1" autocomplete="off" />
         </div>
-        <div class="brief-progress">
+        <div class="brief-progress" hidden>
           <p id="step-label" role="status"></p>
           <progress
             id="brief-progress"
@@ -140,7 +130,7 @@
             />
           </div>
         </section>
-        <section class="brief-step" data-title="Contact details" hidden>
+        <section class="brief-step" data-title="Contact details">
           <h2 tabindex="-1">Contact details</h2>
           <p>
             Your reply details are for this enquiry. Tell me separately what
@@ -194,7 +184,7 @@
             ></textarea>
           </div>
         </section>
-        <section class="brief-step" data-title="What you need" hidden>
+        <section class="brief-step" data-title="What you need">
           <h2 tabindex="-1">What you need</h2>
           <p>
             No need to pick a package or a template. Describe the job and I’ll
@@ -312,7 +302,7 @@
             ></textarea>
           </div>
         </section>
-        <section class="brief-step" data-title="Content and design" hidden>
+        <section class="brief-step" data-title="Content and design">
           <h2 tabindex="-1">Content and design</h2>
           <p>
             Send what you have. If anything is missing, tell me what you need
@@ -402,7 +392,7 @@
             ></textarea>
           </div>
         </section>
-        <section class="brief-step" data-title="Timing and setup" hidden>
+        <section class="brief-step" data-title="Timing and setup">
           <h2 tabindex="-1">Timing and setup</h2>
           <p>
             Rough answers are fine. I’ll use them to prepare a quote.
@@ -490,8 +480,8 @@
         <div class="brief-controls">
           <button id="brief-back" type="button" class="button outline" hidden>
             Back</button
-          ><button id="brief-next" type="button" class="button primary">Continue</button
-          ><button id="brief-send" type="submit" class="button primary" hidden>
+          ><button id="brief-next" type="button" class="button primary" hidden>Continue</button
+          ><button id="brief-send" type="submit" class="button primary">
             Submit
           </button>
         </div>
@@ -522,7 +512,7 @@
       <small>Instagram [@HANDLE]</small>
     </div>
   </footer>
-    <script src="/website-brief.js" defer></script>
+    <script src="/website-brief.js?v=visible-form" defer></script>
     <script src="/navigation.js" defer></script>
 </body>
 </html>
