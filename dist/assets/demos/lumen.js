@@ -19,7 +19,7 @@ let connected = false;
 
 if (config.embedUrl) {
   document.querySelector("#lumen-embed").src = config.embedUrl;
-  document.querySelector("#lumen-basic-note").textContent = "Staff edit the Google Sheet. This timetable updates by itself.";
+  document.querySelector("#lumen-basic-note").textContent = "This version displays the published Google Sheet directly.";
 }
 
 function render() {
@@ -51,7 +51,7 @@ async function loadAutomation() {
       if (key === "Day") values.sort((a, b) => days.indexOf(a) - days.indexOf(b));
       filters.elements[key].append(...values.map((value) => new Option(value, value)));
     }
-    if (connected) document.querySelector("#lumen-automation-note").textContent = "Same Google Sheet, shown in the site's own layout with filters.";
+    if (connected) document.querySelector("#lumen-automation-note").textContent = "These cards use the connected Google Sheet.";
     else if (data.fallback) document.querySelector("#lumen-automation-note").textContent = "The published Google Sheet could not load. This is the sample timetable.";
     render();
   } catch {
@@ -67,9 +67,11 @@ async function switchMode() {
   packageLabel.textContent = showAutomation ? "Built as: Website + automation, S$85" : "Built as: Basic website, S$42.50";
   if (showAutomation) await loadAutomation();
   const usingAutomation = mode.querySelector(":checked").value === "automation";
-  source.href = usingAutomation
-    ? (connected ? config.sourceUrl || config.csvUrl : sample)
-    : (config.embedUrl ? config.sourceUrl || config.embedUrl : sample);
+  const usingPublishedSheet = usingAutomation ? connected : Boolean(config.embedUrl);
+  source.href = usingPublishedSheet
+    ? config.sourceUrl || (usingAutomation ? config.csvUrl : config.embedUrl)
+    : sample;
+  source.textContent = usingPublishedSheet ? "View the source spreadsheet" : "View sample timetable data (CSV)";
 }
 
 mode.addEventListener("change", switchMode);
