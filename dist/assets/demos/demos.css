@@ -213,12 +213,19 @@ dialog .actions, dialog label { margin-top: 12px; }
 .class-card [data-level] { font-size: 1rem; font-weight: 700; margin-top: 0; padding-bottom: 7px; }
 
 .class-card h4 { margin: 0 0 .4em; font-size: clamp(1.2rem, 2.2vw, 1.55rem); line-height: 1.12; }
-.lumen-class-pair { display: grid; grid-template-columns: minmax(0, .9fr) minmax(0, 1fr); gap: 8px; padding: 8px; background: #f4fbf8; border: 1px solid var(--border); border-radius: var(--radius); }
-.lumen-view-label { margin-bottom: 12px; font-size: .95rem; font-weight: 800; }
-.lumen-seat-row { display: grid; grid-template-columns: minmax(0, 1fr) auto; align-items: center; gap: 10px; padding: 9px; border: 1px solid var(--border); font-size: .95rem; }
-.lumen-seat-row [data-staff-class] { font-weight: 800; }
-.lumen-seat-cell { text-align: center; }
-.lumen-seat-stepper { display: flex; align-items: center; gap: 6px; margin-top: 4px; }
+#lumen-view { margin-block: 8px 22px; }
+#lumen-view label { min-height: 44px; padding-inline: 12px; background: var(--surface); }
+#lumen-view label:has(:checked) { background: var(--text); color: var(--surface); }
+#lumen-view input { accent-color: var(--button); }
+.lumen-sheet { margin-top: 14px; }
+.lumen-sheet tbody th { background: var(--surface); }
+.lumen-sheet tbody tr:nth-child(even) > * { background: #f4fbf8; }
+.lumen-sheet thead th:last-child { width: 1%; text-align: center; white-space: nowrap; }
+.lumen-sheet td { padding-inline: clamp(8px, 2vw, 20px); }
+.lumen-staff-time { display: block; font-size: .95rem; font-weight: 400; }
+.lumen-parent-link { min-height: 44px; padding: 0 4px; border: 0; background: transparent; font-size: .95rem; font-weight: 700; text-decoration: underline; text-underline-offset: .22em; }
+.lumen-staff-status:not(:empty) { margin-top: 8px; font-weight: 700; }
+.lumen-seat-stepper { display: flex; align-items: center; justify-content: center; gap: 6px; text-align: center; }
 .lumen-seat-stepper button { width: 44px; height: 44px; padding: 0; border: 1px solid var(--border); border-radius: 8px; background: var(--tint); font-size: 1.25rem; font-weight: 800; }
 .lumen-seat-stepper button:hover:not([aria-disabled="true"]) { border-color: var(--text); }
 .lumen-seat-stepper button[aria-disabled="true"] { opacity: .65; cursor: default; }
@@ -226,6 +233,7 @@ dialog .actions, dialog label { margin-top: 12px; }
 .class-availability { font-weight: 700; margin-top: 8px; }
 .class-availability[data-full] { color: #8b2823; }
 .class-card .action { margin-top: 12px; }
+.lumen .class-card:focus { outline: 3px solid currentColor; outline-offset: 3px; }
 
 
 .coolpoint { --bg:#fff; --text:#15324e; --heading:#075eae; --surface:#fff; --tint:#e6f4fb; --border:#8eabbc; --button:#ff7a1a; --on-button:#192a3d; --font:Manrope,system-ui,sans-serif; --head:var(--font); --head-weight:800; --radius:10px; --button-radius:7px; }
@@ -299,7 +307,7 @@ dialog .actions, dialog label { margin-top: 12px; }
 @media (max-width: 640px) {
   .sumo-wrap { justify-content: flex-start; }
   .sumo-bar strong { flex-basis: 100%; }
-  .split-hero, .property-hero, .quote-layout, .menu-grid, .lumen-class-pair { grid-template-columns: minmax(0,1fr); }
+  .split-hero, .property-hero, .quote-layout, .menu-grid { grid-template-columns: minmax(0,1fr); }
   .property-hero img { width: min(100%,375px); aspect-ratio: 4 / 4.4; }
   .apex-hero > img { object-position: 64% 50%; }
   .apex-hero::before { background: linear-gradient(0deg,rgba(15,17,21,.95) 2%,rgba(15,17,21,.74) 50%,rgba(15,17,21,.16) 100%); }

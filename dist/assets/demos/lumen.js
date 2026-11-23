@@ -15,7 +15,15 @@ const cards = document.querySelector("#class-cards");
 const tally = document.querySelector("#class-count");
 const template = document.querySelector("#class-card");
 const staffTemplate = document.querySelector("#staff-row");
+const staffRows = document.querySelector("#lumen-staff-rows");
+const staffStatus = document.querySelector("#lumen-staff-status");
+const view = document.querySelector("#lumen-view");
+const parentChoice = view.querySelector('[value="parent"]');
+const staffChoice = view.querySelector('[value="staff"]');
+const parentPanel = document.querySelector("#lumen-parent");
+const staffPanel = document.querySelector("#lumen-staff");
 const note = document.querySelector("#lumen-automation-note");
+const renderedCards = new Map();
 let rows = [];
 let loading;
 let connected = false;
@@ -51,52 +59,76 @@ function showAvailability(card, row) {
     row.Subject + " on " + classTime(row) + ". Is this possible?";
 }
 
-function classEntry(row) {
+function classCard(row) {
   const card = template.content.firstElementChild.cloneNode(true);
   card.querySelector("[data-level]").textContent = row.Level;
   card.querySelector("[data-subject]").textContent = row.Subject;
   card.querySelector("[data-time]").textContent = classTime(row);
   card.querySelector("[data-teacher]").textContent = [row.Teacher, row.Room && "Room " + row.Room].filter(Boolean).join(", ");
   showAvailability(card, row);
-  if (connected || row.seats === null) return card;
+  renderedCards.set(row, card);
+  return card;
+}
 
-  const pair = staffTemplate.content.firstElementChild.cloneNode(true);
+function switchView() {
+  parentPanel.hidden = staffChoice.checked;
+  staffPanel.hidden = !staffChoice.checked;
+}
+
+function showParentCard(row) {
+  parentChoice.checked = true;
+  switchView();
+  if (!renderedCards.has(row)) {
+    filters.reset();
+    render();
+  }
+  renderedCards.get(row).focus();
+}
+
+function staffRow(row) {
+  const entry = staffTemplate.content.firstElementChild.cloneNode(true);
   const className = row.Level + " " + row.Subject;
-  pair.querySelector("[data-staff-class]").textContent = className;
-  pair.querySelector("[data-staff-time]").textContent = classTime(row);
-  const seats = pair.querySelector("[data-seats]");
-  const decrease = pair.querySelector("[data-decrease]");
-  const increase = pair.querySelector("[data-increase]");
-  const classLabel = className + " on " + classTime(row);
+  const time = classTime(row);
+  entry.querySelector("[data-staff-class]").textContent = className;
+  entry.querySelector("[data-staff-time]").textContent = time;
+  const seats = entry.querySelector("[data-seats]");
+  const decrease = entry.querySelector("[data-decrease]");
+  const increase = entry.querySelector("[data-increase]");
+  const preview = entry.querySelector("[data-parent-link]");
+  const classLabel = className + " on " + time;
   decrease.setAttribute("aria-label", "Remove one place for " + classLabel);
   increase.setAttribute("aria-label", "Add one place for " + classLabel);
+  preview.setAttribute("aria-label", "See parent card for " + classLabel);
 
   function showSeats() {
-    seats.textContent = row.seats;
-    decrease.setAttribute("aria-disabled", String(row.seats === 0));
-    increase.setAttribute("aria-disabled", String(row.seats === Number.MAX_SAFE_INTEGER));
+    seats.textContent = row.seats ?? "—";
+    decrease.setAttribute("aria-disabled", String(row.seats === null || row.seats === 0));
+    increase.setAttribute("aria-disabled", String(row.seats === null || row.seats === Number.MAX_SAFE_INTEGER));
   }
 
   function changeSeats(amount) {
+    if (row.seats === null) return;
     const count = row.seats + amount;
     if (count < 0 || !Number.isSafeInteger(count)) return;
     row.seats = count;
     showSeats();
-    showAvailability(card, row);
+    const card = renderedCards.get(row);
+    if (card) showAvailability(card, row);
+    staffStatus.textContent = className + " now shows “" + availability(count) + "” in the parent timetable.";
   }
 
   decrease.addEventListener("click", () => changeSeats(-1));
   increase.addEventListener("click", () => changeSeats(1));
+  preview.addEventListener("click", () => showParentCard(row));
   showSeats();
-  card.querySelector("[data-parent-label]").hidden = false;
-  pair.append(card);
-  return pair;
+  return entry;
 }
 
 function render() {
   const choices = new FormData(filters);
   const filtered = rows.filter((row) => filterKeys.every((key) => !choices.get(key) || choices.get(key) === row[key]));
-  cards.replaceChildren(...filtered.map(classEntry));
+  renderedCards.clear();
+  cards.replaceChildren(...filtered.map(classCard));
   tally.textContent = filtered.length ? filtered.length + (filtered.length === 1 ? " class" : " classes") : "No classes match your filters.";
 }
 
@@ -114,12 +146,12 @@ async function loadAutomation() {
       if (key === "Day") values.sort((a, b) => days.indexOf(a) - days.indexOf(b));
       filters.elements[key].append(...values.map((value) => new Option(value, value)));
     }
-    const hasStaffRows = !connected && rows.some((row) => row.seats !== null);
-    cards.classList.toggle("three", !hasStaffRows);
     note.textContent = connected ? "This timetable uses the published Google Sheet." : "Sample timetable.";
     if (data.fallback) note.textContent = "The published Google Sheet could not load. This is the sample timetable.";
+    const hasStaffRows = !connected && rows.some((row) => row.seats !== null);
     if (hasStaffRows) {
-      note.textContent += " Use − or + on any class to see its parent view update. At zero places, the button switches to a waitlist enquiry. Changes stay in this browser.";
+      staffRows.replaceChildren(...rows.map(staffRow));
+      view.hidden = false;
     }
     note.hidden = false;
     render();
@@ -144,6 +176,7 @@ async function switchMode() {
 }
 
 mode.addEventListener("change", switchMode);
+view.addEventListener("change", switchView);
 filters.addEventListener("change", render);
 filters.addEventListener("submit", (event) => event.preventDefault());
 if (new URLSearchParams(location.search).get("mode") === "automation") {
