@@ -7,9 +7,9 @@
   <title>Lumen Tuition | SumoSites demo</title>
   <link rel="icon" href="/assets/sumosites-icon.png" type="image/png">
   <link rel="stylesheet" href="/assets/demos/fonts.css">
-  <link rel="stylesheet" href="/assets/demos/demos.css?v=class-availability">
+  <link rel="stylesheet" href="/assets/demos/demos.css?v=lumen-last-place">
   <script type="module" src="/assets/demos/contact.js"></script>
-  <script type="module" src="/assets/demos/lumen.js?v=class-availability"></script>
+  <script type="module" src="/assets/demos/lumen.js?v=lumen-last-place"></script>
 </head>
 <body class="lumen">
   <a class="skip" href="#content">Skip to content</a>
@@ -51,19 +51,30 @@
     <div id="timetable-automation" class="timetable-panel" hidden>
       <div class="demo-feature">
         <span class="demo-feature-tag">Automation demo</span>
-        <p>Staff update available places in Google Sheets. The website can show when a class fills up and give parents a class-specific WhatsApp message for a trial or the waitlist.</p>
+        <p>Staff update places in Google Sheets. Parents can see which classes have room before they message, and their WhatsApp enquiry already includes the class and time.</p>
       </div>
-      <form class="panel lumen-staff-demo" id="staff-demo" hidden aria-labelledby="staff-demo-title">
-        <h3 id="staff-demo-title">Try it as a staff member</h3>
-        <p>Pick a class and set available places to 0. The class card will switch to “Full” and offer a waitlist enquiry. Changes are simulated in this browser.</p>
-        <div class="filters">
-          <label>Class<select name="class"></select></label>
-          <label>Available places<input name="seats" type="number" min="0" step="1" required></label>
-          <button class="action" type="submit">Update availability</button>
-          <button class="action secondary" id="reset-availability" type="button">Reset demo</button>
+      <section id="availability-demo" class="lumen-scenario" hidden aria-labelledby="availability-demo-title">
+        <h3 id="availability-demo-title">See what happens when a class fills up</h3>
+        <p class="note">Try it with a sample class. Changes stay in this browser.</p>
+        <div class="grid two lumen-scenario-views">
+          <div>
+            <p class="lumen-view-label" id="sample-sheet-label">Staff spreadsheet</p>
+            <div class="panel lumen-scenario-sheet">
+              <table aria-labelledby="sample-sheet-label">
+                <thead><tr><th scope="col">Class</th><th scope="col">Places left</th></tr></thead>
+                <tbody><tr><td id="scenario-class"></td><td id="scenario-places"></td></tr></tbody>
+              </table>
+              <button type="button" class="action" id="scenario-toggle">Mark last place taken</button>
+            </div>
+          </div>
+          <div>
+            <p class="lumen-view-label">What parents see</p>
+            <div id="scenario-preview"></div>
+          </div>
         </div>
-        <p role="status" id="staff-demo-status"></p>
-      </form>
+        <p class="lumen-scenario-status" id="scenario-status" role="status"></p>
+      </section>
+      <h3>Browse all classes</h3>
       <form class="filters" id="class-filters" aria-label="Filter classes">
         <label>Level<select name="Level"><option value="">All levels</option></select></label>
         <label>Subject<select name="Subject"><option value="">All subjects</option></select></label>
@@ -73,7 +84,7 @@
       <p class="result-count" id="class-count" role="status"></p><div id="class-cards" class="grid three"></div>
       <template id="class-card">
         <article class="panel class-card">
-          <p data-level></p><h3 data-subject></h3><p data-time></p><p data-teacher></p>
+          <p data-level></p><h4 data-subject></h4><p data-time></p><p data-teacher></p>
           <p class="class-availability" data-availability hidden></p>
           <button type="button" class="action secondary" data-simulate="WhatsApp">Ask about this class</button>
         </article>
