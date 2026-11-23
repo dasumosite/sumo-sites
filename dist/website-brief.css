@@ -49,6 +49,11 @@ progress::-moz-progress-bar {
 .brief-step h2 {
   font-size: clamp(25px, 4vw, 34px);
 }
+.brief-step:not([hidden]) + .brief-step:not([hidden]) {
+  margin-top: 28px;
+  padding-top: 24px;
+  border-top: 2px solid #e3e7f6;
+}
 .brief-field {
   margin-bottom: 25px;
 }
