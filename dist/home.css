@@ -503,3 +503,25 @@ textarea { resize: vertical; }
   font-weight: 600;
 }
 .care-featured .card-action { margin-top: auto; }
+
+/* Demo screenshots crop out the old pricing banners. Current prices are HTML. */
+.demo-screen {
+  display: block;
+  overflow: hidden;
+  aspect-ratio: var(--screen-ratio);
+}
+.demo-screen--apex-phone { --screen-ratio: 360 / 466; --screen-offset: -16.786%; }
+.demo-screen--bakery-phone { --screen-ratio: 360 / 444; --screen-offset: -20.714%; }
+.demo-screen--bakery-card { --screen-ratio: 8 / 5; --screen-offset: -4.333%; }
+.phone .demo-screen { border: 1px solid var(--ink); border-radius: 7px; }
+.gallery-card .demo-screen { border-radius: 14px 14px 0 0; border-bottom: var(--line); }
+.demo-screen img {
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: auto;
+  border: 0;
+  border-radius: 0;
+  transform: translateY(var(--screen-offset));
+}
+.demo-screen--bakery-card img { width: 104.53%; max-width: none; margin-inline-start: -2.265%; }
