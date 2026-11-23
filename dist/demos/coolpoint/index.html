@@ -17,6 +17,7 @@
     <a href="/demos">Back to demos</a>
     <span>Example site for a fictional business</span>
     <strong id="demo-package">Built as: Website + automation, S$85</strong>
+    <a href="#quote-form">See the automated quote form</a>
   </div></aside>
   
   <header class="business-nav"><div class="shell"><a class="business-name" href="/demos/coolpoint">CoolPoint <span>Aircon</span></a><nav aria-label="Business navigation"><a href="#services">Services</a><a href="#quote-form">Get a quote</a><a href="#contact">Contact</a></nav></div></header>
@@ -37,6 +38,10 @@
     </div>
   </section>
   <section class="band section" id="quote-form"><div class="shell">
+    <div class="demo-feature">
+      <span class="demo-feature-tag">Automation demo</span>
+      <p>On a live site, each quote request <strong>emails the owner</strong> and <strong>adds a row to Google Sheets</strong>. Try the form below to see both results.</p>
+    </div>
     <div class="quote-layout"><div><h2 id="quote-heading">Request a quote</h2><p>Choose a service and tell us about your aircon.</p></div>
     <form id="aircon-quote" class="panel" hidden>
       <div class="fields">
@@ -47,17 +52,17 @@
         <label>Name<input name="name" maxlength="80" autocomplete="name" required></label>
         <label>Mobile number<input name="mobile" type="tel" inputmode="tel" autocomplete="tel" pattern="(?:[+]65[ ]*)?[89][0-9 ]{6,10}[0-9]" title="Enter an 8-digit Singapore mobile number, with an optional +65 prefix" required></label>
       </div>
-      <button class="action" type="submit">Show quote request</button>
+      <button class="action" type="submit">Preview the automated result</button>
       <p class="note">This is a demo. Nothing you type is sent or saved.</p>
     </form><noscript><p>Enable JavaScript to try the sample quote form.</p></noscript></div>
     <div id="aircon-result" class="panel owner-view" hidden>
-      <h2 tabindex="-1">What the owner sees</h2>
-      <div class="mock-email"><h3>Notification email</h3><p><strong>Subject</strong> <span id="email-subject"></span></p><dl id="email-fields"></dl></div>
-      <div class="mock-sheet"><h3>Enquiry spreadsheet</h3><div class="table-scroll" tabindex="0" role="region" aria-label="Example enquiry spreadsheet"><table><thead><tr><th scope="col">Service</th><th scope="col">Units</th><th scope="col">Area</th><th scope="col">Preferred date</th><th scope="col">Name</th><th scope="col">Mobile</th></tr></thead><tbody>
+      <h2 tabindex="-1">What the owner would receive</h2>
+      <div class="mock-email"><h3>Enquiry email preview</h3><p><strong>Subject</strong> <span id="email-subject"></span></p><dl id="email-fields"></dl></div>
+      <div class="mock-sheet"><h3>Google Sheets preview</h3><div class="table-scroll" tabindex="0" role="region" aria-label="Example enquiry spreadsheet"><table><thead><tr><th scope="col">Service</th><th scope="col">Units</th><th scope="col">Area</th><th scope="col">Preferred date</th><th scope="col">Name</th><th scope="col">Mobile</th></tr></thead><tbody>
       <tr><td>General servicing</td><td>2</td><td>East</td><td>20 Nov 2026</td><td>Sample A</td><td>8XXX 0001</td></tr>
       <tr><td>Chemical wash</td><td>1</td><td>Central</td><td>21 Nov 2026</td><td>Sample B</td><td>9XXX 0002</td></tr>
       <tr id="new-enquiry"></tr></tbody></table></div></div>
-      <p>On a real site, this email and spreadsheet row are created automatically for every enquiry.</p>
+      <p>The highlighted row is the one a live form would add for this request.</p>
       <button class="action secondary" id="aircon-reset" type="button">Try again</button>
     </div>
   </div></section>

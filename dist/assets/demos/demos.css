@@ -175,9 +175,32 @@ dialog .actions, dialog label { margin-top: 12px; }
 .reasons li { border-top: 1px solid var(--border); padding-top: 12px; }
 
 .lumen { --bg:#fff; --text:#17306b; --surface:#fff; --tint:#ddf3ea; --border:#86a99d; --button:#ff6b4a; --on-button:#112758; --font:"Plus Jakarta Sans",system-ui,sans-serif; --head:var(--font); --head-weight:800; --radius:18px; --button-radius:12px; }
-.mode-bar { border-bottom: 1px solid var(--border); }
+.demo-feature {
+  color: var(--portfolio-ink);
+  background: #fffaf0;
+  border: 1px solid #dbc48a;
+  border-left: 4px solid var(--portfolio-yellow);
+  border-radius: 8px;
+  padding: 14px 16px;
+  margin-bottom: 18px;
+  font: 400 1rem/1.45 var(--portfolio-font);
+}
+.demo-feature-tag {
+  display: inline-block;
+  border-radius: 999px;
+  padding: 3px 10px;
+  background: var(--portfolio-yellow);
+  font-weight: 600;
+  font-size: .875rem;
+}
+.demo-feature p { margin-top: 6px; }
+.demo-feature--basic { background: #f7f6f1; border-color: #b8bbca; }
+.demo-feature--basic .demo-feature-tag { background: #e8eaf1; }
 #lumen-mode, .segmented { display: flex; flex-wrap: wrap; gap: 5px 10px; border: 0; margin: 0; padding: 0; align-items: center; }
-#lumen-mode { padding-block: 4px 10px; }
+#lumen-mode { margin-block: 17px 15px; }
+#lumen-mode legend { margin-bottom: 6px; }
+#lumen-mode label { min-height: 44px; }
+#lumen-mode input { accent-color: var(--portfolio-ink); }
 #lumen-mode legend, .segmented legend { font-size: .95rem; font-weight: 700; }
 #lumen-mode label, .segmented label { display: flex; align-items: center; gap: 5px; padding: 4px 8px; border: 1px solid var(--border); border-radius: var(--button-radius); cursor: pointer; }
 #lumen-mode label:has(:checked), .segmented label:has(:checked) { background: var(--tint); border-color: var(--text); }

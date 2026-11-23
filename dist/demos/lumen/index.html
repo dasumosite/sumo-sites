@@ -17,8 +17,8 @@
     <a href="/demos">Back to demos</a>
     <span>Example site for a fictional business</span>
     <strong id="demo-package">Built as: Basic website, S$42.50</strong>
+    <a href="#timetable">Compare the timetable versions</a>
   </div></aside>
-  <div class="mode-bar"><div class="shell"><fieldset id="lumen-mode"><legend>View package</legend><label><input type="radio" name="mode" value="basic" checked> Basic, S$42.50</label><label><input type="radio" name="mode" value="automation"> With automation, S$85</label></fieldset></div></div>
   <header class="business-nav"><div class="shell"><a class="business-name" href="/demos/lumen">Lumen <span>Tuition</span></a><nav aria-label="Business navigation"><a href="#subjects">Subjects</a><a href="#timetable">Timetable</a><a href="#contact">Contact</a></nav></div></header>
 <main id="content">
   <section class="band"><div class="shell split-hero">
@@ -35,21 +35,34 @@
   </section>
   <section class="band section" id="timetable"><div class="shell">
     <h2>Class timetable</h2>
-    <div id="timetable-basic" class="timetable-panel after-title">
+    <fieldset id="lumen-mode" aria-controls="timetable-basic timetable-automation">
+      <legend>Compare the two packages</legend>
+      <label><input type="radio" name="mode" value="basic" checked> Basic · S$42.50</label>
+      <label><input type="radio" name="mode" value="automation"> With automation · S$85</label>
+    </fieldset>
+    <div id="timetable-basic" class="timetable-panel">
+      <div class="demo-feature demo-feature--basic">
+        <span class="demo-feature-tag">Basic feature</span>
+        <p>The page embeds the spreadsheet. Families see the timetable in the sheet’s own table layout.</p>
+      </div>
       <iframe id="lumen-embed" src="/demos/lumen/sample-sheet.html" title="Lumen class timetable spreadsheet" loading="lazy"></iframe>
-      <p class="note source-note" id="lumen-basic-note">This sample shows how the timetable looks as an embed. A connected Google Sheet updates when staff edit it.</p>
+      <p class="note source-note" id="lumen-basic-note">This demo uses a sample spreadsheet.</p>
     </div>
     <div id="timetable-automation" class="timetable-panel" hidden>
+      <div class="demo-feature">
+        <span class="demo-feature-tag">Automation demo</span>
+        <p>Staff edit Google Sheets. The website reads the rows and builds class cards that families can filter by level, subject or day.</p>
+      </div>
       <form class="filters" id="class-filters" aria-label="Filter classes">
         <label>Level<select name="Level"><option value="">All levels</option></select></label>
         <label>Subject<select name="Subject"><option value="">All subjects</option></select></label>
         <label>Day<select name="Day"><option value="">All days</option></select></label>
       </form>
-      <p class="note source-note" id="lumen-automation-note">The same sample timetable, shown in the site’s own layout with filters.</p>
+      <p class="note source-note" id="lumen-automation-note">Try the filters with the same sample data from the Basic version.</p>
       <p class="result-count" id="class-count" role="status"></p><div id="class-cards" class="grid three"></div>
       <template id="class-card"><article class="panel class-card"><p></p><h3></h3><p></p><p></p></article></template>
     </div>
-    <a class="source-link" id="lumen-source" href="/assets/demos/timetable.csv">View the source spreadsheet</a>
+    <a class="source-link" id="lumen-source" href="/assets/demos/timetable.csv">View sample timetable data (CSV)</a>
   </div></section>
   <section class="shell section contact-block" id="contact"><div><h2>Visit Lumen</h2><p>18 Lantern Walk, #02-04, Singapore (sample address)</p><p>Tuesday to Friday, 3pm to 8pm. Saturday and Sunday, 9am to 5pm.</p></div><div class="actions"><button type="button" class="action" data-simulate="WhatsApp" data-message="Hi Lumen, I&#x27;d like to ask about a trial class.">Ask about a trial class</button><button type="button" class="action secondary" data-simulate="Google Maps" data-message="18 Lantern Walk, #02-04, Singapore">Open in Google Maps</button></div></section>
 </main>
