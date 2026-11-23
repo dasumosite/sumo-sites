@@ -7,9 +7,9 @@
   <title>Lumen Tuition | SumoSites demo</title>
   <link rel="icon" href="/assets/sumosites-icon.png" type="image/png">
   <link rel="stylesheet" href="/assets/demos/fonts.css">
-  <link rel="stylesheet" href="/assets/demos/demos.css">
+  <link rel="stylesheet" href="/assets/demos/demos.css?v=class-availability">
   <script type="module" src="/assets/demos/contact.js"></script>
-  <script type="module" src="/assets/demos/lumen.js"></script>
+  <script type="module" src="/assets/demos/lumen.js?v=class-availability"></script>
 </head>
 <body class="lumen">
   <a class="skip" href="#content">Skip to content</a>
@@ -51,16 +51,33 @@
     <div id="timetable-automation" class="timetable-panel" hidden>
       <div class="demo-feature">
         <span class="demo-feature-tag">Automation demo</span>
-        <p>Staff edit Google Sheets. The website reads the rows and builds class cards that families can filter by level, subject or day.</p>
+        <p>Staff update available places in Google Sheets. The website can show when a class fills up and give parents a class-specific WhatsApp message for a trial or the waitlist.</p>
       </div>
+      <form class="panel lumen-staff-demo" id="staff-demo" hidden aria-labelledby="staff-demo-title">
+        <h3 id="staff-demo-title">Try it as a staff member</h3>
+        <p>Pick a class and set available places to 0. The class card will switch to “Full” and offer a waitlist enquiry. Changes are simulated in this browser.</p>
+        <div class="filters">
+          <label>Class<select name="class"></select></label>
+          <label>Available places<input name="seats" type="number" min="0" step="1" required></label>
+          <button class="action" type="submit">Update availability</button>
+          <button class="action secondary" id="reset-availability" type="button">Reset demo</button>
+        </div>
+        <p role="status" id="staff-demo-status"></p>
+      </form>
       <form class="filters" id="class-filters" aria-label="Filter classes">
         <label>Level<select name="Level"><option value="">All levels</option></select></label>
         <label>Subject<select name="Subject"><option value="">All subjects</option></select></label>
         <label>Day<select name="Day"><option value="">All days</option></select></label>
       </form>
-      <p class="note source-note" id="lumen-automation-note">Try the filters with the same sample data from the Basic version.</p>
+      <p class="note source-note" id="lumen-automation-note">Sample timetable. Find a class and preview the message a parent would send.</p>
       <p class="result-count" id="class-count" role="status"></p><div id="class-cards" class="grid three"></div>
-      <template id="class-card"><article class="panel class-card"><p></p><h3></h3><p></p><p></p></article></template>
+      <template id="class-card">
+        <article class="panel class-card">
+          <p data-level></p><h3 data-subject></h3><p data-time></p><p data-teacher></p>
+          <p class="class-availability" data-availability hidden></p>
+          <button type="button" class="action secondary" data-simulate="WhatsApp">Ask about this class</button>
+        </article>
+      </template>
     </div>
     <a class="source-link" id="lumen-source" href="/assets/demos/timetable.csv">View sample timetable data (CSV)</a>
   </div></section>
