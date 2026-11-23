@@ -1,7 +1,7 @@
 # SumoSites
 
 The SumoSites website, customer enquiry form and six interactive demos.
-All website source files, self-hosted fonts and images are in `dist/`.
+Static pages, self-hosted fonts and images are in `dist/`. The enquiry email endpoint is a Cloudflare Pages Function in `functions/`.
 
 ## Production deployment
 
@@ -18,10 +18,24 @@ Cloudflare Pages settings:
 - Build command: leave empty
 - Build output directory: `dist`
 
-The website needs no build step, runtime server or third-party dependencies.
-To preview locally, run `python3 -m http.server 8000 --directory dist` and
-open http://localhost:8000.
+The site has no build command. Cloudflare Pages bundles the email function
+when deploying. Demo form answers and inventory changes are held in browser
+memory.
 
-The website uses static HTML, CSS and JavaScript. The enquiry form prepares
-a draft in the visitor’s email app. Demo form answers and inventory changes
-are held in browser memory.
+## Website brief email
+
+The website brief posts to `/api/website-brief`. The function asks Brevo to send
+from and to `dasumo.site@gmail.com`. Reply-To is the visitor’s email address.
+Verify the sending address in Brevo. Brevo may rewrite the From address for
+senders on unauthenticated domains, including Gmail.
+
+Copy `.env.example` to `.env` at the project root for local development and
+fill in `BREVO_API_KEY`. Run `npx wrangler pages dev dist` to test the form and
+its email endpoint locally.
+
+For production, set `BREVO_API_KEY` as a secret under **Workers & Pages →
+sumo-sites → Settings → Variables and Secrets**. To
+upload the filled local file directly from an authenticated Wrangler session,
+run `npx wrangler pages secret bulk .env --project-name sumo-sites`.
+Deploy after setting the production secret. Keep the filled `.env` out of
+Git and the static output directory.

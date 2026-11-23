@@ -7,14 +7,12 @@
   const preview = document.querySelector("#email-preview");
   const status = document.querySelector("#brief-status");
   const error = document.querySelector("#form-error");
-  const recipient = "dasumo.site@gmail.com";
+  const success = document.querySelector("#brief-success");
   let current = 0;
-  let subject = "";
-  let emailURI = "";
+  let submitting = false;
 
   function prepare() {
     const data = new FormData(form);
-    subject = `Website enquiry — ${data.get("business").trim()}`;
     const sections = steps.slice(0, -1).map((step, index) => {
       const answers = [...step.querySelectorAll("[data-question]")].map(
         (group) => {
@@ -32,11 +30,6 @@
       return `${index + 1}. ${step.dataset.title}\n${answers.join("\n\n")}`;
     });
     preview.value = `Hi SumoSites,\n\nHere are my answers about the website I need. Please recommend what to build and provide a quote.\n\n${sections.join("\n\n--------------------\n\n")}\n\nReply to: ${data.get("email").trim()}\n\nThanks,\n${data.get("name").trim()}`;
-    const params = `subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(preview.value)}`;
-    emailURI = `mailto:${recipient}?${params}`;
-    document.querySelector("#gmail-draft").href =
-      `https://mail.google.com/mail/?view=cm&fs=1&to=${encodeURIComponent(recipient)}&su=${encodeURIComponent(subject)}&body=${encodeURIComponent(preview.value)}`;
-    document.querySelector("#long-draft").hidden = emailURI.length < 1800;
   }
 
   function show(index, focus = true) {
@@ -81,8 +74,9 @@
     if (validate(steps[current])) show(current + 1);
   });
   back.addEventListener("click", () => show(current - 1));
-  form.addEventListener("submit", (event) => {
+  form.addEventListener("submit", async (event) => {
     event.preventDefault();
+    if (submitting) return;
     if (current < steps.length - 1) {
       next.click();
       return;
@@ -98,38 +92,38 @@
         return;
       }
     }
-    prepare();
-    window.open(emailURI, "_self");
-    status.textContent =
-      "Email draft requested. If your email app did not open, use Gmail or copy or download your answers. You still need to press Send in your email app.";
-  });
-  document.querySelector("#copy-brief").addEventListener("click", async () => {
+    const data = new FormData(form);
+    const answers = { ...Object.fromEntries(data), features: data.getAll("features") };
+    submitting = true;
+    send.disabled = true;
+    back.disabled = true;
+    send.textContent = "Submitting…";
+    error.textContent = "";
+    status.textContent = "Sending your answers.";
+
     try {
-      await navigator.clipboard.writeText(preview.value);
-      status.textContent =
-        "Answers copied. Paste it into an email to dasumo.site@gmail.com.";
+      const response = await fetch(form.action, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(answers),
+      });
+      if (!response.ok) throw new Error("Submission failed.");
+      const result = await response.json();
+      if (result.ok !== true) throw new Error("Submission failed.");
+
+      form.reset();
+      form.hidden = true;
+      success.hidden = false;
+      success.querySelector("h2").focus();
     } catch {
-      preview.focus();
-      preview.select();
       status.textContent =
-        "Your answers are selected. Use your device’s Copy command, then paste it into an email to dasumo.site@gmail.com.";
+        "Couldn’t submit your answers. They’re still here. Please try again, or use the email or WhatsApp link above.";
+    } finally {
+      submitting = false;
+      send.disabled = false;
+      back.disabled = false;
+      send.textContent = "Submit";
     }
-  });
-  document.querySelector("#download-brief").addEventListener("click", () => {
-    const blob = new Blob(
-      [`To: ${recipient}\nSubject: ${subject}\n\n${preview.value}`],
-      { type: "text/plain;charset=utf-8" },
-    );
-    const url = URL.createObjectURL(blob);
-    const link = document.createElement("a");
-    link.href = url;
-    link.download = "sumosites-website-answers.txt";
-    document.body.append(link);
-    link.click();
-    link.remove();
-    setTimeout(() => URL.revokeObjectURL(url), 30000);
-    status.textContent =
-      "Answers download requested. Attach the text file and any photos to your email to dasumo.site@gmail.com.";
   });
   show(0, false);
   form.hidden = false;
