@@ -120,12 +120,6 @@ progress::-moz-progress-bar {
 .brief-note p {
   margin: 0;
 }
-.brief-tools {
-  margin-block: 22px;
-  display: flex;
-  flex-wrap: wrap;
-  gap: 8px;
-}
 #email-preview {
   background: #f7f6f1;
   font-size: 17px;
@@ -162,7 +156,6 @@ progress::-moz-progress-bar {
 .brief-intro .fine { margin-top: 8px; }
 .brief-step h2 { margin-bottom: 10px; }
 .brief-step h2 + p { margin-bottom: 18px; }
-.brief-tools .button { max-width: 100%; }
 #website-brief input[type="checkbox"] { min-height: 0; }
 #website-brief input::placeholder,
 #website-brief textarea::placeholder { color: #41486a; }

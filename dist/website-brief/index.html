@@ -7,7 +7,7 @@
     <link rel="canonical" href="https://sumosites.tech/website-brief/" />
     <meta
       name="description"
-      content="Tell SumoSites about your business, content and website requirements. Review your answers and send them by email."
+      content="Tell SumoSites about your business, content and website requirements. Review and submit your answers online."
     />
     <link rel="icon" href="/assets/sumosites-icon.png" />
     <link rel="stylesheet" href="/home.css" />
@@ -48,9 +48,8 @@
           I’ll use your answers to recommend what to build and give you a quote.
         </p>
         <p class="fine">
-          Only four answers are required. You’ll review your answers, then
-          open a draft in your email app addressed to SumoSites. Leaving or
-          refreshing this page clears your answers.
+          Only four answers are required. You can review them before submitting
+          the form. Leaving or refreshing this page clears your answers.
         </p>
         <p class="brief-direct">
           Questions or prefer to talk first?
@@ -61,14 +60,18 @@
       <noscript
         ><div class="brief-note">
           <p>
-            This form needs JavaScript to prepare your email. You can also send
+            This form needs JavaScript to submit. You can also send
             your business details, website goals, content, design ideas and
             timing directly to
             <a href="mailto:dasumo.site@gmail.com">dasumo.site@gmail.com</a>.
           </p>
         </div></noscript
       >
-      <form id="website-brief" novalidate hidden>
+      <form id="website-brief" action="/api/website-brief" method="post" novalidate hidden>
+        <div hidden>
+          <label for="brief-website-url">Website URL</label>
+          <input id="brief-website-url" name="websiteUrl" type="text" tabindex="-1" autocomplete="off" />
+        </div>
         <div class="brief-progress">
           <p id="step-label" role="status"></p>
           <progress
@@ -370,8 +373,8 @@
               >Shared folder or file links
               <span class="optional">(optional)</span></label
             ><span class="field-help" id="brief-folder-hint"
-              >Paste links you’re happy to share, or attach files yourself after
-              opening the email draft. This form does not upload files.</span
+              >Paste links to any files you want to share, such as your logo
+              or photos.</span
             ><textarea
               id="brief-folder"
               name="folder"
@@ -477,49 +480,30 @@
             ></textarea>
           </div>
         </section>
-        <section class="brief-step" data-title="Review and email" hidden>
-          <h2 tabindex="-1">Review and email</h2>
-          <p>To: <strong>dasumo.site@gmail.com</strong></p>
-          <p>
-            Check your answers below. Review the draft in your email app and
-            press Send when it’s ready. Attach your photos or logo if needed.
-          </p>
-          <label for="email-preview">Your answers</label
-          ><textarea id="email-preview" rows="16" readonly></textarea>
-          <p id="long-draft" class="brief-note" hidden>
-            Your answers are long. Some email apps may cut off a long draft. To
-            keep every answer, download your answers and attach it to your email,
-            or copy it into the message.
-          </p>
-          <div class="actions brief-tools">
-            <button type="button" class="button outline" id="copy-brief">
-              Copy answers</button
-            ><button type="button" class="button outline" id="download-brief">
-              Download answers</button
-            ><a
-              id="gmail-draft"
-              class="button outline"
-              href="https://mail.google.com/"
-              target="_blank"
-              rel="noopener noreferrer"
-              >Open in Gmail</a
-            >
-          </div>
-          <p id="brief-status" role="status"></p>
+        <section class="brief-step" data-title="Review and submit" hidden>
+          <h2 tabindex="-1">Review and submit</h2>
+          <p>Check your answers below, then select Submit to send them to SumoSites.</p>
+          <label for="email-preview">Your answers</label>
+          <textarea id="email-preview" rows="16" readonly></textarea>
         </section>
+        <p id="brief-status" role="status"></p>
         <div class="brief-controls">
           <button id="brief-back" type="button" class="button outline" hidden>
             Back</button
           ><button id="brief-next" type="button" class="button primary">Continue</button
           ><button id="brief-send" type="submit" class="button primary" hidden>
-            Open email draft
+            Submit
           </button>
         </div>
         <p class="fine">
-          Nothing is sent automatically. Please don’t include passwords, payment
-          details or private customer information.
+          Please don’t include passwords, payment details or private customer
+          information.
         </p>
       </form>
+      <section id="brief-success" class="brief-note" hidden>
+        <h2 tabindex="-1">Thanks, your answers were submitted.</h2>
+        <p>I’ll review your brief and get back to you at the email address you provided.</p>
+      </section>
     </main>
   <footer class="site-footer">
     <div class="wrap footer-content">

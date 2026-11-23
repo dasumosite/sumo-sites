@@ -2,3 +2,5 @@ node_modules/
 .cloudflare/
 .env
 .env.*
+!.env.example
+.dev.vars*
