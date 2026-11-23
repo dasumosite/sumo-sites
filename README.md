@@ -1,7 +1,7 @@
 # SumoSites
 
 The SumoSites website, customer enquiry form and six interactive demos.
-Static pages, self-hosted fonts and images are in `dist/`. The enquiry email endpoint is a Cloudflare Pages Function in `functions/`.
+Static pages, self-hosted fonts and images are in `dist/`. The enquiry endpoint is a Cloudflare Pages Function in `functions/`.
 
 ## Production deployment
 
@@ -18,20 +18,27 @@ Cloudflare Pages settings:
 - Build command: leave empty
 - Build output directory: `dist`
 
-The site has no build command. Cloudflare Pages bundles the email function
+The site has no build command. Cloudflare Pages bundles the enquiry function
 when deploying. Demo form answers and inventory changes are held in browser
 memory.
 
-## Website brief email
+## Website brief notifications
 
 The website brief posts to `/api/website-brief`. The function sends the answers
 through Brevo to `dasumo.site@gmail.com` and sets Reply-To to the visitor’s
 address.
 
+After Brevo accepts the email, the function sends a short transactional SMS
+alert if SMS settings are configured. The answers are in the email. SMS
+failures are logged without customer details and do not affect a successful
+form submission.
+
 Copy `.env.example` to `.env` at the project root for local development.
 Fill in `BREVO_API_KEY` and `BREVO_SENDER_EMAIL`. Use a sender configured in
-Brevo. Run `npx wrangler pages dev dist` to test the form and its email endpoint
-locally.
+Brevo. For SMS, set `BREVO_SMS_SENDER` to your registered Brevo SMS Sender ID
+and `BREVO_SMS_RECIPIENT` to your own mobile number with the country code.
+Email and SMS use the same API key. SMS also requires Brevo SMS credits.
+Run `npx wrangler pages dev dist` to test the form and its endpoint locally.
 
 For production, add the same values under **Workers & Pages → sumo-sites →
 Settings → Variables and Secrets**. Store `BREVO_API_KEY` as a secret. To
