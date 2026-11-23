@@ -1,19 +1,59 @@
 (() => {
+  const preview = document.querySelector("#email-preview");
+  const fallback = document.querySelector("#brief-fallback");
+  const fallbackHint = document.querySelector("#brief-fallback-hint");
+  const email = document.querySelector("#brief-email-fallback");
+  const whatsapp = document.querySelector("#brief-whatsapp-fallback");
+  const copy = document.querySelector("#brief-copy");
+  const copyStatus = document.querySelector("#brief-copy-status");
+  const emailAddress = email.getAttribute("href");
+  const whatsappAddress = whatsapp.getAttribute("href");
+  const maxDraftUrlLength = 2200;
+
+  function showFallback() {
+    const emailDraft = emailAddress + "?subject=Website%20enquiry&body=" +
+      encodeURIComponent(preview.value.replaceAll("\n", "\r\n"));
+    const whatsappDraft = whatsappAddress + "?text=" + encodeURIComponent(preview.value);
+    const canPrefill = Math.max(emailDraft.length, whatsappDraft.length) <= maxDraftUrlLength;
+    email.href = canPrefill ? emailDraft : emailAddress + "?subject=Website%20enquiry";
+    whatsapp.href = canPrefill ? whatsappDraft : whatsappAddress;
+    fallbackHint.textContent = canPrefill
+      ? "Open a draft with your answers, or copy every question and answer."
+      : "Copy your full answers first, then paste them into your email or WhatsApp message.";
+    copyStatus.textContent = "";
+    copy.hidden = false;
+    fallback.hidden = false;
+  }
+
+  copy.addEventListener("click", async () => {
+    copyStatus.textContent = "";
+    try {
+      await navigator.clipboard.writeText(preview.value);
+      copyStatus.textContent = "All questions and answers copied.";
+    } catch {
+      preview.focus();
+      preview.select();
+      copyStatus.textContent = "Your answers are selected. Use your device’s copy command.";
+    }
+  });
+
   const form = document.querySelector("#website-brief");
+  if (!form) {
+    showFallback();
+    return;
+  }
   const steps = [...form.querySelectorAll(".brief-step")];
   const back = document.querySelector("#brief-back");
   const next = document.querySelector("#brief-next");
   const send = document.querySelector("#brief-send");
   const progress = document.querySelector("#brief-progress");
-  const preview = document.querySelector("#email-preview");
   const status = document.querySelector("#brief-status");
   const error = document.querySelector("#form-error");
   const success = document.querySelector("#brief-success");
   let current = 0;
   let submitting = false;
 
-  function prepare() {
-    const data = new FormData(form);
+  function prepare(data = new FormData(form)) {
     const sections = steps.slice(0, -1).map((step, index) => {
       const answers = [...step.querySelectorAll("[data-question]")].map(
         (group) => {
@@ -30,7 +70,7 @@
       );
       return `${index + 1}. ${step.dataset.title}\n${answers.join("\n\n")}`;
     });
-    preview.value = `Hi SumoSites,\n\nHere are my answers about the website I need. Please recommend what to build and provide a quote.\n\n${sections.join("\n\n--------------------\n\n")}\n\nReply to: ${data.get("email").trim()}\n\nThanks,\n${data.get("name").trim()}`;
+    preview.value = `Hi SumoSites, here are my website brief answers.\n\n${sections.join("\n\n")}`;
   }
 
   function show(index, focus = true) {
@@ -48,6 +88,7 @@
     progress.value = index + 1;
     error.textContent = "";
     status.textContent = "";
+    fallback.hidden = true;
     if (last) prepare();
     if (focus) steps[index].querySelector("h2").focus();
   }
@@ -94,37 +135,44 @@
       }
     }
     const data = new FormData(form);
+    prepare(data);
     const answers = { ...Object.fromEntries(data), features: data.getAll("features") };
+    const controller = new AbortController();
+    const timeout = setTimeout(() => controller.abort(), 20000);
     submitting = true;
     send.disabled = true;
     back.disabled = true;
     send.textContent = "Submitting…";
     error.textContent = "";
+    fallback.hidden = true;
     status.textContent = "Sending your answers.";
 
     try {
       const response = await fetch(form.action, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
+        signal: controller.signal,
         body: JSON.stringify(answers),
       });
       if (!response.ok) throw new Error("Submission failed.");
       const result = await response.json();
       if (result.ok !== true) throw new Error("Submission failed.");
-
-      form.reset();
-      form.hidden = true;
-      success.hidden = false;
-      success.querySelector("h2").focus();
     } catch {
-      status.textContent =
-        "Couldn’t submit your answers. They’re still here. Please try again, or use the email or WhatsApp link above.";
+      status.textContent = "Couldn’t confirm your answers were sent. Try Submit again or use the options below.";
+      showFallback();
+      return;
     } finally {
+      clearTimeout(timeout);
       submitting = false;
       send.disabled = false;
       back.disabled = false;
       send.textContent = "Submit";
     }
+
+    form.reset();
+    form.hidden = true;
+    success.hidden = false;
+    success.querySelector("h2").focus();
   });
   show(0, false);
   form.noValidate = true;

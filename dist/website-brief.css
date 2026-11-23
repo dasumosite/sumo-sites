@@ -125,6 +125,18 @@ progress::-moz-progress-bar {
 .brief-note p {
   margin: 0;
 }
+.brief-note h3 {
+  margin: 0 0 8px;
+}
+.brief-fallback-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 14px;
+}
+.brief-fallback-actions + p:not(:empty) {
+  margin-top: 12px;
+}
 #email-preview {
   background: #f7f6f1;
   font-size: 17px;

@@ -11,7 +11,7 @@
     />
     <link rel="icon" href="/assets/sumosites-icon.png" />
     <link rel="stylesheet" href="/home.css" />
-    <link rel="stylesheet" href="/website-brief.css?v=visible-form" />
+    <link rel="stylesheet" href="/website-brief.css?v=submission-recovery" />
   </head>
   <body>
     <a class="skip button outline" href="#main">Skip to content</a>
@@ -59,8 +59,8 @@
       </div>
       <form id="website-brief" action="/api/website-brief" method="post">
         <div hidden>
-          <label for="brief-website-url">Website URL</label>
-          <input id="brief-website-url" name="websiteUrl" type="text" tabindex="-1" autocomplete="off" />
+          <label for="brief-confirm">Leave this field blank</label>
+          <input id="brief-confirm" name="briefConfirm" type="text" tabindex="-1" autocomplete="off" />
         </div>
         <div class="brief-progress" hidden>
           <p id="step-label" role="status"></p>
@@ -83,6 +83,7 @@
               id="brief-business"
               name="business"
               type="text"
+              autocomplete="organization"
               maxlength="250"
               required
               aria-describedby="brief-business-hint"
@@ -142,6 +143,7 @@
               id="brief-name"
               name="name"
               type="text"
+              autocomplete="name"
               maxlength="250"
               required
             />
@@ -154,6 +156,9 @@
               id="brief-email"
               name="email"
               type="email"
+              pattern="[^\s@]+@[^\s@]+\.[^\s@]+"
+              title="Enter a complete email address, such as name@example.com."
+              autocomplete="email"
               maxlength="250"
               required
               aria-describedby="brief-email-hint"
@@ -162,7 +167,7 @@
           <div class="brief-field" data-question="Your phone number">
             <label for="brief-phone"
               >Your phone number <span class="optional">(optional)</span></label
-            ><input id="brief-phone" name="phone" type="tel" maxlength="250" />
+            ><input id="brief-phone" name="phone" type="tel" maxlength="250" autocomplete="tel" />
           </div>
           <div
             class="brief-field"
@@ -485,6 +490,16 @@
             Submit
           </button>
         </div>
+        <section class="brief-note" id="brief-fallback" aria-labelledby="brief-fallback-title" hidden>
+          <h3 id="brief-fallback-title">Send your answers another way</h3>
+          <p id="brief-fallback-hint"></p>
+          <div class="brief-fallback-actions">
+            <a id="brief-email-fallback" class="button outline" href="mailto:dasumo.site@gmail.com">Email answers</a>
+            <a id="brief-whatsapp-fallback" class="button outline" href="https://wa.me/6587890507" target="_blank" rel="noopener noreferrer">WhatsApp answers</a>
+            <button id="brief-copy" class="button outline" type="button" hidden>Copy answers</button>
+          </div>
+          <p id="brief-copy-status" class="fine" role="status"></p>
+        </section>
         <p class="fine">
           Please don’t include passwords, payment details or private customer
           information.
@@ -512,7 +527,7 @@
       <small>Instagram [@HANDLE]</small>
     </div>
   </footer>
-    <script src="/website-brief.js?v=visible-form" defer></script>
+    <script src="/website-brief.js?v=submission-recovery" defer></script>
     <script src="/navigation.js" defer></script>
 </body>
 </html>
