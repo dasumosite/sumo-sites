@@ -1,0 +1,97 @@
+.apex {
+  --button: #8ab8ff;
+  --on-button: #101319;
+  --button-radius: 6px;
+  --radius: 8px;
+  accent-color: var(--button);
+}
+.apex .apex-nav nav a { padding: 8px 11px; border-radius: 5px; }
+.apex .apex-nav nav a[aria-current="page"] { background: var(--surface); color: #a7c7ff; }
+.apex .apex-nav nav a:last-child:not([aria-current]) { background: var(--button); color: var(--on-button); }
+.apex-showroom { min-height: clamp(420px, 57vw, 720px); }
+.apex-hero .apex-hero-copy { padding-bottom: clamp(38px, 8vw, 100px); }
+.apex-showroom .apex-eyebrow { color: #a7c7ff; font-weight: 600; font-size: 1rem; }
+.apex-showroom h1 { margin-top: 8px; }
+.apex-showroom .actions { margin-top: 22px; }
+.apex-showroom .action { margin: 0; }
+.apex-showroom .action.secondary { background: #15171a; }
+.apex .section-head a, .apex-service-card > a:not(.action) { color: #a7c7ff; font-weight: 600; }
+.apex-service-card { display: flex; flex-direction: column; align-items: start; gap: 12px; }
+.apex-service-card p { margin: 0; }
+.apex-service-card ul { margin: 0 0 8px; padding-inline-start: 20px; }
+.apex-service-card a:last-child { margin-top: auto; }
+.apex-feature { display: grid; grid-template-columns: 1.25fr 1fr; align-items: center; gap: 28px; }
+.apex-feature img { border-radius: 8px; }
+.apex-feature .action { margin-top: 18px; }
+.apex-heading { padding-bottom: 26px; }
+.apex-heading p { max-width: 55ch; }
+.apex-page-body { padding-bottom: clamp(45px, 7vw, 90px); }
+.apex-detail-note { margin-top: 15px; }
+
+.apex-result { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 3fr); gap: 18px 28px; padding-block: 24px; border-top: 1px solid var(--border); }
+.apex-comparison-images { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; }
+.apex-comparison-images figure { position: relative; }
+.apex-comparison-images img { display: block; aspect-ratio: 758 / 332; object-fit: cover; }
+.apex-comparison-images figcaption {
+  position: absolute;
+  top: 9px;
+  left: 9px;
+  padding: 4px 9px;
+  border-radius: 4px;
+  background: #15171a;
+  color: #fff;
+  font-size: .9rem;
+  line-height: 1.15;
+}
+.apex-after figcaption { left: auto; right: 9px; }
+.apex-comparison-divider { display: none; }
+[data-apex-compare].is-interactive .apex-comparison-images { position: relative; display: block; overflow: hidden; border-radius: 8px; }
+.is-interactive .apex-before {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  clip-path: inset(0 calc(100% - var(--apex-reveal, 50%)) 0 0);
+}
+.is-interactive .apex-comparison-divider {
+  display: block;
+  position: absolute;
+  z-index: 2;
+  inset-block: 0;
+  left: var(--apex-reveal, 50%);
+  width: 2px;
+  background: #fff;
+  pointer-events: none;
+}
+.apex .apex-slider { display: grid; gap: 2px; margin-top: 10px; font-size: .95rem; }
+.apex .apex-slider input[type="range"] { width: 100%; min-height: 40px; padding: 0; margin: 0; cursor: ew-resize; background: transparent; border: 0; }
+.apex-faq { margin-block: 25px; }
+.apex-faq details { padding: 14px 0; border-bottom: 1px solid var(--border); }
+.apex-faq summary { cursor: pointer; font-weight: 600; }
+.apex-faq details p { max-width: 66ch; margin-top: 8px; }
+.apex-booking { display: grid; grid-template-columns: 1fr minmax(270px, .9fr); align-items: start; gap: 18px; }
+.apex-quote-form, .apex-quote-summary { display: grid; gap: 15px; }
+.apex-quote-form h2, .apex-quote-summary h2 { font-size: clamp(1.85rem, 4.5vw, 2.5rem); }
+.apex-quote-form fieldset { border: 0; padding: 0; margin: 0; }
+.apex-quote-form legend { font-weight: 600; margin-bottom: 6px; }
+.apex-quote-form fieldset label { display: flex; align-items: center; gap: 8px; min-height: 40px; }
+.apex-quote-form input[type="checkbox"] { width: 19px; height: 19px; min-height: 0; padding: 0; margin: 0; flex-shrink: 0; }
+.apex-quote-summary dl { display: grid; grid-template-columns: 1fr auto; gap: 8px 14px; }
+.apex-quote-summary dd { text-align: right; }
+.apex .apex-total {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 6px 12px;
+  border-top: 1px solid var(--border);
+  padding-top: 12px;
+  font-weight: 700;
+}
+.apex-total output { color: #a7c7ff; font-size: 1.7rem; }
+.apex-quote-summary .action { justify-self: start; }
+
+@media (max-width: 690px) {
+  .apex-feature, .apex-result, .apex-booking { grid-template-columns: minmax(0, 1fr); }
+  .apex-nav nav { gap: 4px; }
+  .apex .apex-nav nav a { padding: 6px 8px; }
+}

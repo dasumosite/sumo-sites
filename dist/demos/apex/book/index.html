@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="en-SG">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex">
+  <title>Build your detailing quote | Apex Detail Studio demo</title>
+  <link rel="icon" href="/assets/sumosites-icon.png" type="image/png">
+  <link rel="stylesheet" href="/assets/demos/fonts.css">
+  <link rel="stylesheet" href="/assets/demos/demos.css">
+  <link rel="stylesheet" href="/assets/demos/apex.css">
+  <script type="module" src="/assets/demos/apex.js"></script>
+  <script type="module" src="/assets/demos/contact.js"></script>
+</head>
+<body class="apex">
+  <a class="skip" href="#content">Skip to content</a>
+  <aside class="sumo-bar" aria-label="About this demo"><div class="sumo-wrap">
+    <a href="/demos/">Back to demos</a>
+    <span>Example site for a fictional business</span>
+    <strong id="demo-package">Multi-page website demo · S$125</strong>
+  </div></aside>
+  <header class="business-nav apex-nav">
+    <div class="shell">
+      <a class="business-name" href="/demos/apex/">APEX <span>DETAIL STUDIO</span></a>
+      <nav aria-label="Business navigation">
+        <a href="/demos/apex/">Showroom</a>
+        <a href="/demos/apex/services/">Services</a>
+        <a href="/demos/apex/results/">Results</a>
+        <a href="/demos/apex/care/">Care guide</a>
+        <a href="/demos/apex/book/" aria-current="page">Book a detail</a>
+      </nav>
+    </div>
+  </header>
+  <main id="content">
+  <section class="shell section apex-heading">
+    <h1>Build your detailing quote</h1>
+    <p>Choose a package, vehicle size and any extras to see an estimate.</p>
+  </section>
+  <section class="shell apex-page-body">
+    <noscript><p class="note">Enable JavaScript to build an estimate here, or <a href="/demos/apex/services/">view the package prices</a>.</p></noscript>
+    <div class="apex-booking" data-apex-booking hidden>
+      <form id="apex-quote" class="panel apex-quote-form">
+        <h2>Your detail</h2>
+        <label>Package<select name="service"><option value="express" data-price="45">Express wash · S$45</option><option value="inside-out" data-price="95" selected>Inside &amp; out · S$95</option><option value="paint-refresh" data-price="180">Paint refresh · S$180</option></select></label>
+        <label>Vehicle size<select name="vehicle">
+          <option value="sedan" data-price="0">Hatchback or sedan</option>
+          <option value="suv" data-price="20">SUV or crossover · +S$20</option>
+          <option value="mpv" data-price="35">MPV or 7-seater · +S$35</option>
+        </select></label>
+        <fieldset>
+          <legend>Optional extras</legend>
+          <label><input type="checkbox" name="extras" value="Pet hair removal" data-price="25"> Pet hair removal · +S$25</label>
+          <label><input type="checkbox" name="extras" value="Glass water repellent" data-price="18"> Glass water repellent · +S$18</label>
+        </fieldset>
+      </form>
+      <div class="panel apex-quote-summary">
+        <h2>Your estimate</h2>
+        <dl id="apex-quote-breakdown"></dl>
+        <p class="apex-total"><span>Estimated total</span><output form="apex-quote" id="apex-quote-total" aria-live="polite"></output></p>
+        <button type="button" class="action" data-simulate="WhatsApp">Preview booking message</button>
+        <p class="note">This demo shows a sample message. It doesn’t send a booking or take payment.</p>
+      </div>
+    </div>
+  </section>
+  </main>
+  <footer class="business-footer"><div class="shell">Apex Detail Studio <span>Mobile car detailing · Singapore</span></div></footer>
+  <aside class="sumo-cta"><div class="sumo-wrap"><p>Want a site like this for your business?</p><a href="/#enquire">Get a website quote</a></div></aside>
+  <dialog id="demo-contact" aria-labelledby="contact-popup-title">
+    <h2 id="contact-popup-title"></h2>
+    <p id="contact-popup-description"></p>
+    <blockquote id="contact-popup-message" hidden></blockquote>
+    <div class="actions"><a class="action" href="/#enquire">Get a site like this</a><form method="dialog"><button class="action secondary">Close</button></form></div>
+  </dialog>
+</body>
+</html>
