@@ -45,7 +45,7 @@ function reply(status, body, headers = {}) {
   });
 }
 
-function replyToForm(status) {
+function replyToForm(status, answers) {
   if (status === 200) {
     return new Response(null, {
       status: 303,
@@ -53,9 +53,27 @@ function replyToForm(status) {
     });
   }
 
-  const guidance = status === 400
+  const guidance = answers
+    ? "You can go back in your browser to try again, or send your answers another way below."
+    : status === 400
     ? "Go back in your browser and check the four required answers before trying again."
-    : "Go back in your browser to try again, or email SumoSites directly.";
+    : "Go back in your browser to try again.";
+  // Escape the untrusted answers before placing them in a read-only textarea.
+  const message = answers && formatAnswers(answers).replaceAll("&", "&amp;").replaceAll("<", "&lt;");
+  const fallback = message ? `
+      <section class="brief-note" id="brief-fallback" aria-labelledby="brief-fallback-title">
+        <h2 id="brief-fallback-title">Send your answers another way</h2>
+        <p id="brief-fallback-hint">Copy the answers below and paste them into your message.</p>
+        <label for="email-preview">Your answers</label>
+        <textarea id="email-preview" rows="14" readonly>${message}</textarea>
+        <div class="brief-fallback-actions">
+          <a id="brief-email-fallback" class="button outline" href="mailto:${SUMOSITES_EMAIL}">Email answers</a>
+          <a id="brief-whatsapp-fallback" class="button outline" href="https://wa.me/6587890507" target="_blank" rel="noopener noreferrer">WhatsApp answers</a>
+          <button id="brief-copy" class="button outline" type="button" hidden>Copy answers</button>
+        </div>
+        <p id="brief-copy-status" class="fine" role="status"></p>
+      </section>
+      <script src="/website-brief.js?v=submission-recovery" defer></script>` : "";
   return new Response(`<!doctype html>
 <html lang="en-SG">
   <head>
@@ -64,15 +82,14 @@ function replyToForm(status) {
     <meta name="robots" content="noindex">
     <title>Website enquiry could not be sent | SumoSites</title>
     <link rel="stylesheet" href="/home.css">
-    <link rel="stylesheet" href="/website-brief.css">
+    <link rel="stylesheet" href="/website-brief.css?v=submission-recovery">
   </head>
   <body>
     <main class="wrap brief-main">
       <div class="brief-intro">
         <h1>Your answers couldn’t be sent.</h1>
         <p>${guidance}</p>
-        <p><a href="mailto:${SUMOSITES_EMAIL}">${SUMOSITES_EMAIL}</a></p>
-      </div>
+      </div>${fallback}
     </main>
   </body>
 </html>`, {
@@ -149,8 +166,12 @@ export async function onRequest({ request, env }) {
   }
   const type = request.headers.get("Content-Type")?.split(";")[0].trim().toLowerCase();
   const isForm = type === FORM_CONTENT_TYPE;
-  const respond = (status) => isForm ? replyToForm(status) : reply(status, { ok: status === 200 });
-  if (request.headers.get("Origin") !== new URL(request.url).origin) {
+  const respond = (status, answers) => isForm ? replyToForm(status, answers) : reply(status, { ok: status === 200 });
+  const origin = request.headers.get("Origin");
+  // Some browser privacy configurations omit Origin on a same-origin submission.
+  const sameOrigin = origin === new URL(request.url).origin ||
+    ((!origin || origin === "null") && request.headers.get("Sec-Fetch-Site") === "same-origin");
+  if (!sameOrigin) {
     return respond(403);
   }
   if (!isForm && type !== "application/json") return respond(415);
@@ -163,12 +184,15 @@ export async function onRequest({ request, env }) {
   if (!payload || typeof payload !== "object" || Array.isArray(payload)) {
     return respond(400);
   }
-  if (payload.websiteUrl) return respond(400);
+  if (payload.briefConfirm || payload.websiteUrl) return respond(400);
   const answers = readAnswers(payload);
   if (!answers) return respond(400);
 
   const key = env.BREVO_API_KEY?.trim();
-  if (!key) return respond(503);
+  if (!key) {
+    console.warn("Website brief delivery is missing its Brevo configuration.");
+    return respond(503, answers);
+  }
 
   const business = answers.business.replace(/\s+/gu, " ").slice(0, 120);
   try {
@@ -187,8 +211,13 @@ export async function onRequest({ request, env }) {
         textContent: formatAnswers(answers),
       }),
     });
-    return respond(result.status === 201 ? 200 : 502);
+    if (result.status !== 201) {
+      console.warn("Website brief delivery received Brevo HTTP status", result.status);
+      return respond(502, answers);
+    }
+    return respond(200);
   } catch {
-    return respond(502);
+    console.warn("Website brief delivery could not reach Brevo.");
+    return respond(502, answers);
   }
 }
