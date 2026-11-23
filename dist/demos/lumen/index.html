@@ -7,9 +7,9 @@
   <title>Lumen Tuition | SumoSites demo</title>
   <link rel="icon" href="/assets/sumosites-icon.png" type="image/png">
   <link rel="stylesheet" href="/assets/demos/fonts.css">
-  <link rel="stylesheet" href="/assets/demos/demos.css?v=lumen-all-classes">
+  <link rel="stylesheet" href="/assets/demos/demos.css?v=lumen-parent-staff">
   <script type="module" src="/assets/demos/contact.js"></script>
-  <script type="module" src="/assets/demos/lumen.js?v=lumen-all-classes"></script>
+  <script type="module" src="/assets/demos/lumen.js?v=lumen-parent-staff"></script>
 </head>
 <body class="lumen">
   <a class="skip" href="#content">Skip to content</a>
@@ -53,40 +53,53 @@
         <span class="demo-feature-tag">Automation demo</span>
         <p>Staff update places in Google Sheets. Parents can see which classes have room before they message, and their WhatsApp enquiry already includes the class and time.</p>
       </div>
-      <h3>Browse all classes</h3>
-      <p class="note source-note" id="lumen-automation-note" hidden></p>
-      <form class="filters" id="class-filters" aria-label="Filter classes">
-        <label>Level<select name="Level"><option value="">All levels</option></select></label>
-        <label>Subject<select name="Subject"><option value="">All subjects</option></select></label>
-        <label>Day<select name="Day"><option value="">All days</option></select></label>
-      </form>
-      <p class="result-count" id="class-count" role="status"></p><div id="class-cards" class="grid three"></div>
-      <template id="staff-row">
-        <div class="lumen-class-pair">
-          <div class="panel lumen-staff-row">
-            <p class="lumen-view-label">Sample spreadsheet</p>
-            <div class="lumen-seat-row">
-              <div>
-                <p data-staff-class></p>
-                <p data-staff-time></p>
-              </div>
-              <div class="lumen-seat-cell">
-                <p>Places left</p>
-                <div class="lumen-seat-stepper">
-                  <button type="button" data-decrease>−</button>
-                  <strong data-seats></strong>
-                  <button type="button" data-increase>+</button>
-                </div>
-              </div>
-            </div>
-          </div>
+      <fieldset id="lumen-view" class="segmented" aria-controls="lumen-parent lumen-staff" hidden>
+        <legend>Choose a view</legend>
+        <label><input type="radio" name="view" value="parent" checked> Parent timetable</label>
+        <label><input type="radio" name="view" value="staff"> Staff spreadsheet</label>
+      </fieldset>
+      <section id="lumen-parent" aria-labelledby="lumen-parent-title">
+        <h3 id="lumen-parent-title">Browse all classes</h3>
+        <p class="note source-note" id="lumen-automation-note" hidden></p>
+        <form class="filters" id="class-filters" aria-label="Filter classes">
+          <label>Level<select name="Level"><option value="">All levels</option></select></label>
+          <label>Subject<select name="Subject"><option value="">All subjects</option></select></label>
+          <label>Day<select name="Day"><option value="">All days</option></select></label>
+        </form>
+        <p class="result-count" id="class-count" role="status"></p>
+        <div id="class-cards" class="grid three"></div>
+      </section>
+      <section id="lumen-staff" aria-labelledby="lumen-staff-title" hidden>
+        <h3 id="lumen-staff-title">Staff spreadsheet</h3>
+        <p class="note source-note">Use − or + to change places in any row, then select See parent card. Sample edits reset when you refresh.</p>
+        <p id="lumen-staff-status" class="lumen-staff-status" role="status"></p>
+        <div class="table-scroll lumen-sheet">
+          <table aria-labelledby="lumen-staff-title">
+            <thead><tr><th scope="col">Class</th><th scope="col">Places left</th></tr></thead>
+            <tbody id="lumen-staff-rows"></tbody>
+          </table>
         </div>
+      </section>
+      <template id="staff-row">
+        <tr>
+          <th scope="row">
+            <span data-staff-class></span>
+            <span class="lumen-staff-time" data-staff-time></span>
+            <button class="lumen-parent-link" type="button" data-parent-link>See parent card</button>
+          </th>
+          <td>
+            <div class="lumen-seat-stepper">
+              <button type="button" data-decrease>−</button>
+              <strong data-seats></strong>
+              <button type="button" data-increase>+</button>
+            </div>
+          </td>
+        </tr>
       </template>
       <template id="class-card">
-        <article class="panel class-card">
-          <p class="lumen-view-label" data-parent-label hidden>What parents see</p>
+        <article class="panel class-card" tabindex="-1">
           <p data-level></p><h4 data-subject></h4><p data-time></p><p data-teacher></p>
-          <p class="class-availability" data-availability role="status" hidden></p>
+          <p class="class-availability" data-availability hidden></p>
           <button type="button" class="action secondary" data-simulate="WhatsApp">Ask about this class</button>
         </article>
       </template>
