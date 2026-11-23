@@ -1,9 +1,9 @@
-Level,Subject,Day,Start,End,Teacher,Room
-Primary 4,Maths,Tuesday,16:00,17:30,Ms Tan,Mint
-Primary 5,Science,Wednesday,16:30,18:00,Mr Lim,Mint
-Primary 6,Maths,Saturday,09:00,10:30,Ms Tan,Coral
-Primary 6,Science,Saturday,11:00,12:30,Mr Lim,Mint
-Secondary 1,Maths,Thursday,17:00,18:30,Ms Ong,Coral
-Secondary 2,Science,Friday,17:30,19:00,Mr Lim,Mint
-Secondary 3,Maths,Saturday,14:00,15:30,Ms Ong,Coral
-Secondary 4,Science,Sunday,11:00,12:30,Mr Lim,Mint
+Level,Subject,Day,Start,End,Teacher,Room,Seats
+Primary 4,Maths,Tuesday,16:00,17:30,Ms Tan,Mint,3
+Primary 5,Science,Wednesday,16:30,18:00,Mr Lim,Mint,2
+Primary 6,Maths,Saturday,09:00,10:30,Ms Tan,Coral,1
+Primary 6,Science,Saturday,11:00,12:30,Mr Lim,Mint,4
+Secondary 1,Maths,Thursday,17:00,18:30,Ms Ong,Coral,0
+Secondary 2,Science,Friday,17:30,19:00,Mr Lim,Mint,2
+Secondary 3,Maths,Saturday,14:00,15:30,Ms Ong,Coral,3
+Secondary 4,Science,Sunday,11:00,12:30,Mr Lim,Mint,1

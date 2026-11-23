@@ -212,6 +212,16 @@ dialog .actions, dialog label { margin-top: 12px; }
 .timetable-panel + .source-link { margin-top: 6px; }
 .class-card p:first-child { font-size: 1rem; font-weight: 700; padding-bottom: 7px; }
 
+.lumen-staff-demo { margin-bottom: 20px; }
+.lumen-staff-demo .filters { margin-bottom: 6px; }
+.lumen-staff-demo label:first-child { flex-basis: 245px; }
+.lumen-staff-demo label:nth-child(2) { flex-grow: 0; }
+.lumen-staff-demo [role="status"]:not(:empty) { margin-top: 10px; font-weight: 700; }
+.class-availability { font-weight: 700; margin-top: 8px; }
+.class-availability[data-full] { color: #8b2823; }
+.class-card .action { margin-top: 12px; }
+
+
 .coolpoint { --bg:#fff; --text:#15324e; --heading:#075eae; --surface:#fff; --tint:#e6f4fb; --border:#8eabbc; --button:#ff7a1a; --on-button:#192a3d; --font:Manrope,system-ui,sans-serif; --head:var(--font); --head-weight:800; --radius:10px; --button-radius:7px; }
 .coolpoint .business-name { color: #0b6bcb; }
 .coolpoint .business-nav a:not(.business-name) { color: var(--heading); }
