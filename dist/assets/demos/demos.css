@@ -210,22 +210,19 @@ dialog .actions, dialog label { margin-top: 12px; }
 .lumen-board a { display: inline-block; margin-top: 12px; font-weight: 700; }
 .timetable-panel iframe { display: block; width: 100%; height: 350px; border: 1px solid var(--border); border-radius: 10px; background: var(--surface); }
 .timetable-panel + .source-link { margin-top: 6px; }
-.class-card p:first-child { font-size: 1rem; font-weight: 700; padding-bottom: 7px; }
+.class-card [data-level] { font-size: 1rem; font-weight: 700; margin-top: 0; padding-bottom: 7px; }
 
 .class-card h4 { margin: 0 0 .4em; font-size: clamp(1.2rem, 2.2vw, 1.55rem); line-height: 1.12; }
-.lumen-scenario { margin-block: 18px 28px; padding: clamp(12px, 2.6vw, 24px); background: #f4fbf8; border: 1px solid var(--border); border-radius: var(--radius); }
-.lumen-scenario-views { margin-top: 14px; }
-.lumen-scenario-views > div { display: flex; flex-direction: column; min-width: 0; }
-.lumen-view-label { margin-bottom: 6px; font-size: .95rem; font-weight: 800; }
-.lumen-scenario-sheet, #scenario-preview { flex: 1; display: grid; }
-.lumen-scenario-sheet { align-content: start; }
-.lumen-scenario-sheet table { width: 100%; border-collapse: collapse; font-size: .98rem; }
-.lumen-scenario-sheet th, .lumen-scenario-sheet td { border: 1px solid var(--border); padding: 7px 9px; text-align: start; }
-.lumen-scenario-sheet th { background: var(--tint); }
-.lumen-scenario-sheet td:last-child, .lumen-scenario-sheet th:last-child { width: 1%; white-space: nowrap; }
-.lumen-scenario-sheet td:last-child { font-weight: 800; text-align: center; }
-.lumen-scenario-sheet .action { justify-self: start; margin-top: 12px; }
-.lumen-scenario-status { margin-top: 12px; font-size: .95rem; font-weight: 700; }
+.lumen-class-pair { display: grid; grid-template-columns: minmax(0, .9fr) minmax(0, 1fr); gap: 8px; padding: 8px; background: #f4fbf8; border: 1px solid var(--border); border-radius: var(--radius); }
+.lumen-view-label { margin-bottom: 12px; font-size: .95rem; font-weight: 800; }
+.lumen-seat-row { display: grid; grid-template-columns: minmax(0, 1fr) auto; align-items: center; gap: 10px; padding: 9px; border: 1px solid var(--border); font-size: .95rem; }
+.lumen-seat-row [data-staff-class] { font-weight: 800; }
+.lumen-seat-cell { text-align: center; }
+.lumen-seat-stepper { display: flex; align-items: center; gap: 6px; margin-top: 4px; }
+.lumen-seat-stepper button { width: 44px; height: 44px; padding: 0; border: 1px solid var(--border); border-radius: 8px; background: var(--tint); font-size: 1.25rem; font-weight: 800; }
+.lumen-seat-stepper button:hover:not([aria-disabled="true"]) { border-color: var(--text); }
+.lumen-seat-stepper button[aria-disabled="true"] { opacity: .65; cursor: default; }
+.lumen-seat-stepper strong { min-width: 2ch; font-variant-numeric: tabular-nums; }
 .class-availability { font-weight: 700; margin-top: 8px; }
 .class-availability[data-full] { color: #8b2823; }
 .class-card .action { margin-top: 12px; }
@@ -302,7 +299,7 @@ dialog .actions, dialog label { margin-top: 12px; }
 @media (max-width: 640px) {
   .sumo-wrap { justify-content: flex-start; }
   .sumo-bar strong { flex-basis: 100%; }
-  .split-hero, .property-hero, .quote-layout, .menu-grid, .lumen-scenario-views { grid-template-columns: minmax(0,1fr); }
+  .split-hero, .property-hero, .quote-layout, .menu-grid, .lumen-class-pair { grid-template-columns: minmax(0,1fr); }
   .property-hero img { width: min(100%,375px); aspect-ratio: 4 / 4.4; }
   .apex-hero > img { object-position: 64% 50%; }
   .apex-hero::before { background: linear-gradient(0deg,rgba(15,17,21,.95) 2%,rgba(15,17,21,.74) 50%,rgba(15,17,21,.16) 100%); }

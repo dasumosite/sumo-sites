@@ -7,9 +7,9 @@
   <title>Lumen Tuition | SumoSites demo</title>
   <link rel="icon" href="/assets/sumosites-icon.png" type="image/png">
   <link rel="stylesheet" href="/assets/demos/fonts.css">
-  <link rel="stylesheet" href="/assets/demos/demos.css?v=lumen-last-place">
+  <link rel="stylesheet" href="/assets/demos/demos.css?v=lumen-all-classes">
   <script type="module" src="/assets/demos/contact.js"></script>
-  <script type="module" src="/assets/demos/lumen.js?v=lumen-last-place"></script>
+  <script type="module" src="/assets/demos/lumen.js?v=lumen-all-classes"></script>
 </head>
 <body class="lumen">
   <a class="skip" href="#content">Skip to content</a>
@@ -53,39 +53,40 @@
         <span class="demo-feature-tag">Automation demo</span>
         <p>Staff update places in Google Sheets. Parents can see which classes have room before they message, and their WhatsApp enquiry already includes the class and time.</p>
       </div>
-      <section id="availability-demo" class="lumen-scenario" hidden aria-labelledby="availability-demo-title">
-        <h3 id="availability-demo-title">See what happens when a class fills up</h3>
-        <p class="note">Try it with a sample class. Changes stay in this browser.</p>
-        <div class="grid two lumen-scenario-views">
-          <div>
-            <p class="lumen-view-label" id="sample-sheet-label">Staff spreadsheet</p>
-            <div class="panel lumen-scenario-sheet">
-              <table aria-labelledby="sample-sheet-label">
-                <thead><tr><th scope="col">Class</th><th scope="col">Places left</th></tr></thead>
-                <tbody><tr><td id="scenario-class"></td><td id="scenario-places"></td></tr></tbody>
-              </table>
-              <button type="button" class="action" id="scenario-toggle">Mark last place taken</button>
-            </div>
-          </div>
-          <div>
-            <p class="lumen-view-label">What parents see</p>
-            <div id="scenario-preview"></div>
-          </div>
-        </div>
-        <p class="lumen-scenario-status" id="scenario-status" role="status"></p>
-      </section>
       <h3>Browse all classes</h3>
+      <p class="note source-note" id="lumen-automation-note" hidden></p>
       <form class="filters" id="class-filters" aria-label="Filter classes">
         <label>Level<select name="Level"><option value="">All levels</option></select></label>
         <label>Subject<select name="Subject"><option value="">All subjects</option></select></label>
         <label>Day<select name="Day"><option value="">All days</option></select></label>
       </form>
-      <p class="note source-note" id="lumen-automation-note">Sample timetable. Find a class and preview the message a parent would send.</p>
       <p class="result-count" id="class-count" role="status"></p><div id="class-cards" class="grid three"></div>
+      <template id="staff-row">
+        <div class="lumen-class-pair">
+          <div class="panel lumen-staff-row">
+            <p class="lumen-view-label">Sample spreadsheet</p>
+            <div class="lumen-seat-row">
+              <div>
+                <p data-staff-class></p>
+                <p data-staff-time></p>
+              </div>
+              <div class="lumen-seat-cell">
+                <p>Places left</p>
+                <div class="lumen-seat-stepper">
+                  <button type="button" data-decrease>−</button>
+                  <strong data-seats></strong>
+                  <button type="button" data-increase>+</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </template>
       <template id="class-card">
         <article class="panel class-card">
+          <p class="lumen-view-label" data-parent-label hidden>What parents see</p>
           <p data-level></p><h4 data-subject></h4><p data-time></p><p data-teacher></p>
-          <p class="class-availability" data-availability hidden></p>
+          <p class="class-availability" data-availability role="status" hidden></p>
           <button type="button" class="action secondary" data-simulate="WhatsApp">Ask about this class</button>
         </article>
       </template>

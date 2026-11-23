@@ -14,17 +14,11 @@ const filters = document.querySelector("#class-filters");
 const cards = document.querySelector("#class-cards");
 const tally = document.querySelector("#class-count");
 const template = document.querySelector("#class-card");
-const scenario = document.querySelector("#availability-demo");
-const scenarioClass = document.querySelector("#scenario-class");
-const scenarioPlaces = document.querySelector("#scenario-places");
-const scenarioToggle = document.querySelector("#scenario-toggle");
-const scenarioPreview = document.querySelector("#scenario-preview");
-const scenarioStatus = document.querySelector("#scenario-status");
+const staffTemplate = document.querySelector("#staff-row");
+const note = document.querySelector("#lumen-automation-note");
 let rows = [];
 let loading;
 let connected = false;
-let featuredClass;
-let lastPlaceTaken = false;
 
 if (config.embedUrl) {
   document.querySelector("#lumen-embed").src = config.embedUrl;
@@ -35,53 +29,75 @@ function classTime(row) {
   return row.Day + ", " + row.Start + "–" + row.End;
 }
 
-function seatCount(row) {
-  return row === featuredClass && lastPlaceTaken ? 0 : row.seats;
-}
-
 function availability(seats) {
   if (seats === 0) return "Full · waitlist available";
   return seats === 1 ? "1 place left" : seats + " places left";
 }
 
-function classCard(row) {
-  const node = template.content.cloneNode(true);
-  node.querySelector("[data-level]").textContent = row.Level;
-  node.querySelector("[data-subject]").textContent = row.Subject;
-  node.querySelector("[data-time]").textContent = classTime(row);
-  node.querySelector("[data-teacher]").textContent = [row.Teacher, row.Room && "Room " + row.Room].filter(Boolean).join(", ");
-
-  const seats = seatCount(row);
+function showAvailability(card, row) {
+  const { seats } = row;
   const full = seats === 0;
-  const status = node.querySelector("[data-availability]");
+  const status = card.querySelector("[data-availability]");
   if (seats !== null) {
     status.hidden = false;
     status.textContent = availability(seats);
     status.toggleAttribute("data-full", full);
   }
 
-  const button = node.querySelector("button");
+  const button = card.querySelector("button");
   button.textContent = full ? "Ask to join the waitlist" : "Ask about a trial";
   const request = full ? "join the waitlist for" : "ask about a trial for";
   button.dataset.message = "Hi Lumen, I’d like to " + request + " " + row.Level + " " +
     row.Subject + " on " + classTime(row) + ". Is this possible?";
-  return node;
+}
+
+function classEntry(row) {
+  const card = template.content.firstElementChild.cloneNode(true);
+  card.querySelector("[data-level]").textContent = row.Level;
+  card.querySelector("[data-subject]").textContent = row.Subject;
+  card.querySelector("[data-time]").textContent = classTime(row);
+  card.querySelector("[data-teacher]").textContent = [row.Teacher, row.Room && "Room " + row.Room].filter(Boolean).join(", ");
+  showAvailability(card, row);
+  if (connected || row.seats === null) return card;
+
+  const pair = staffTemplate.content.firstElementChild.cloneNode(true);
+  const className = row.Level + " " + row.Subject;
+  pair.querySelector("[data-staff-class]").textContent = className;
+  pair.querySelector("[data-staff-time]").textContent = classTime(row);
+  const seats = pair.querySelector("[data-seats]");
+  const decrease = pair.querySelector("[data-decrease]");
+  const increase = pair.querySelector("[data-increase]");
+  const classLabel = className + " on " + classTime(row);
+  decrease.setAttribute("aria-label", "Remove one place for " + classLabel);
+  increase.setAttribute("aria-label", "Add one place for " + classLabel);
+
+  function showSeats() {
+    seats.textContent = row.seats;
+    decrease.setAttribute("aria-disabled", String(row.seats === 0));
+    increase.setAttribute("aria-disabled", String(row.seats === Number.MAX_SAFE_INTEGER));
+  }
+
+  function changeSeats(amount) {
+    const count = row.seats + amount;
+    if (count < 0 || !Number.isSafeInteger(count)) return;
+    row.seats = count;
+    showSeats();
+    showAvailability(card, row);
+  }
+
+  decrease.addEventListener("click", () => changeSeats(-1));
+  increase.addEventListener("click", () => changeSeats(1));
+  showSeats();
+  card.querySelector("[data-parent-label]").hidden = false;
+  pair.append(card);
+  return pair;
 }
 
 function render() {
   const choices = new FormData(filters);
   const filtered = rows.filter((row) => filterKeys.every((key) => !choices.get(key) || choices.get(key) === row[key]));
-  cards.replaceChildren(...filtered.map(classCard));
+  cards.replaceChildren(...filtered.map(classEntry));
   tally.textContent = filtered.length ? filtered.length + (filtered.length === 1 ? " class" : " classes") : "No classes match your filters.";
-}
-
-function renderScenario() {
-  scenarioPlaces.textContent = seatCount(featuredClass);
-  scenarioToggle.textContent = lastPlaceTaken ? "Reopen the last place" : "Mark last place taken";
-  scenarioPreview.replaceChildren(classCard(featuredClass));
-  scenarioStatus.textContent = lastPlaceTaken
-    ? "The class is full. Parents can now ask to join the waitlist."
-    : "One place is available. Parents can ask about a trial.";
 }
 
 async function loadAutomation() {
@@ -98,17 +114,14 @@ async function loadAutomation() {
       if (key === "Day") values.sort((a, b) => days.indexOf(a) - days.indexOf(b));
       filters.elements[key].append(...values.map((value) => new Option(value, value)));
     }
-    if (connected) {
-      document.querySelector("#lumen-automation-note").textContent = "This timetable uses the published Google Sheet.";
-    } else {
-      featuredClass = rows.find((row) => row.seats === 1);
-      if (featuredClass) {
-        scenarioClass.textContent = featuredClass.Level + " " + featuredClass.Subject;
-        scenario.hidden = false;
-        renderScenario();
-      }
-      if (data.fallback) document.querySelector("#lumen-automation-note").textContent = "The published Google Sheet could not load. This is the sample timetable.";
+    const hasStaffRows = !connected && rows.some((row) => row.seats !== null);
+    cards.classList.toggle("three", !hasStaffRows);
+    note.textContent = connected ? "This timetable uses the published Google Sheet." : "Sample timetable.";
+    if (data.fallback) note.textContent = "The published Google Sheet could not load. This is the sample timetable.";
+    if (hasStaffRows) {
+      note.textContent += " Use − or + on any class to see its parent view update. At zero places, the button switches to a waitlist enquiry. Changes stay in this browser.";
     }
+    note.hidden = false;
     render();
   } catch {
     loading = undefined;
@@ -127,14 +140,9 @@ async function switchMode() {
   source.href = usingPublishedSheet
     ? config.sourceUrl || (usingAutomation ? config.csvUrl : config.embedUrl)
     : sample;
-  source.textContent = usingPublishedSheet ? "View the source spreadsheet" : "View sample timetable data (CSV)";
+  source.textContent = usingPublishedSheet ? "View the source spreadsheet" : "View original sample timetable data (CSV)";
 }
 
-scenarioToggle.addEventListener("click", () => {
-  lastPlaceTaken = !lastPlaceTaken;
-  renderScenario();
-  render();
-});
 mode.addEventListener("change", switchMode);
 filters.addEventListener("change", render);
 filters.addEventListener("submit", (event) => event.preventDefault());
