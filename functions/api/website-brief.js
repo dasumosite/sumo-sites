@@ -1,8 +1,6 @@
-const INBOX = "dasumo.site@gmail.com";
+const SUMOSITES_EMAIL = "dasumo.site@gmail.com";
 const MAX_REQUEST_BYTES = 320 * 1024;
 const EMAIL = /^[^\s@]+@[^\s@]+\.[^\s@]+$/u;
-const SMS_RECIPIENT = /^\+?[1-9]\d{7,14}$/u;
-const SMS_SENDER = /^(?:[a-z0-9]{3,11}|\d{3,15})$/iu;
 
 const sections = [
   ["Your business", [
@@ -99,40 +97,7 @@ function formatAnswers(answers) {
   }).join("\n\n--------------------\n\n");
 }
 
-async function postToBrevo(path, key, payload) {
-  const response = await fetch("https://api.brevo.com/v3" + path, {
-    method: "POST",
-    headers: {
-      "api-key": key,
-      "Content-Type": "application/json",
-    },
-    signal: AbortSignal.timeout(10000),
-    body: JSON.stringify(payload),
-  });
-  return response.status;
-}
-
-async function sendSmsAlert(key, sender, recipient) {
-  if (!SMS_SENDER.test(sender) || !SMS_RECIPIENT.test(recipient)) {
-    console.warn("Website brief SMS settings are incomplete or invalid.");
-    return;
-  }
-
-  try {
-    const status = await postToBrevo("/transactionalSMS/send", key, {
-      sender,
-      recipient: recipient.replace(/^\+/u, ""),
-      content: "SumoSites: New website enquiry. Check your email for the full brief.",
-      type: "transactional",
-    });
-    if (status !== 201) console.warn("Brevo did not accept the website brief SMS.", { status });
-  } catch {
-    console.warn("The website brief SMS request to Brevo failed.");
-  }
-}
-
-export async function onRequest(context) {
-  const { request, env } = context;
+export async function onRequest({ request, env }) {
   if (request.method !== "POST") {
     return reply(405, { ok: false }, { Allow: "POST" });
   }
@@ -153,26 +118,28 @@ export async function onRequest(context) {
   if (!answers) return reply(400, { ok: false });
 
   const key = env.BREVO_API_KEY?.trim();
-  const sender = env.BREVO_SENDER_EMAIL?.trim();
-  if (!key || !sender || !EMAIL.test(sender)) return reply(503, { ok: false });
+  if (!key) return reply(503, { ok: false });
 
   const business = answers.business.replace(/\s+/gu, " ").slice(0, 120);
   try {
-    const status = await postToBrevo("/smtp/email", key, {
-      sender: { email: sender, name: "SumoSites" },
-      to: [{ email: INBOX }],
-      replyTo: { email: answers.email },
-      subject: "Website enquiry — " + business,
-      textContent: formatAnswers(answers),
+    const result = await fetch("https://api.brevo.com/v3/smtp/email", {
+      method: "POST",
+      headers: {
+        "api-key": key,
+        "Content-Type": "application/json",
+      },
+      signal: AbortSignal.timeout(10000),
+      body: JSON.stringify({
+        sender: { email: SUMOSITES_EMAIL, name: "SumoSites" },
+        to: [{ email: SUMOSITES_EMAIL }],
+        replyTo: { email: answers.email },
+        subject: "Website enquiry — " + business,
+        textContent: formatAnswers(answers),
+      }),
     });
-    if (status !== 201) return reply(502, { ok: false });
+    if (result.status !== 201) return reply(502, { ok: false });
+    return reply(200, { ok: true });
   } catch {
     return reply(502, { ok: false });
   }
-
-  const smsSender = env.BREVO_SMS_SENDER?.trim() ?? "";
-  const smsRecipient = env.BREVO_SMS_RECIPIENT?.trim() ?? "";
-  // A missed alert must not make a visitor resend an enquiry already accepted by Brevo.
-  if (smsSender || smsRecipient) context.waitUntil(sendSmsAlert(key, smsSender, smsRecipient));
-  return reply(200, { ok: true });
 }
